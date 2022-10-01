@@ -95,7 +95,8 @@ class Countdown extends Component {
               <span>Hours</span>
             </span>
           </span>
-
+        </div>
+        <div className="Countdown">
           <span className="Countdown-col">
             <span className="Countdown-col-element">
               <strong>{this.addLeadingZeros(countDown.min)}</strong>
@@ -114,6 +115,7 @@ class Countdown extends Component {
     );
   }
 }
+
 Countdown.defaultProps = {
   date: new Date(),
 };
@@ -129,8 +131,7 @@ const Styles = styled.div`
   text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 
   .Countdown {
-    margin: 10px auto;
-    padding-bottom: 20px;
+    text-align: center;
   }
 
   .Countdown-col {
@@ -147,6 +148,12 @@ const Styles = styled.div`
 
   .Countdown-col-element strong {
     font-size: 50px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .Countdown-col-element strong {
+      font-size: 30px;
+    }
   }
 `;
 

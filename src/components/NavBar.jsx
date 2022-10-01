@@ -51,7 +51,7 @@ const Styled = styled.div`
   }
 
   .image {
-    height: 50px;
+    height: 36px;
   }
 
   .menu {
@@ -90,6 +90,10 @@ const Styled = styled.div`
   }
 
   @media screen and (max-width: 768px) {
+    .image {
+      height: 32px;
+    }
+
     .list {
       flex-direction: column;
       top: 70px;
