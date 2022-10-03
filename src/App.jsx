@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-import MainPage from "./components/MainPage";
+import MainPage from "./layouts/MainPage";
 import NavBar from "./components/NavBar";
 
-import background from "./assets/background.jpg";
-import logo from "./assets/logo.svg";
+import { TEDxHCMUSLogo } from "./assets";
 
 function App() {
   const navbarLinks = [
@@ -15,8 +14,8 @@ function App() {
 
   return (
     <Styled>
-      <NavBar navbarLinks={navbarLinks} imageSrc={logo} />
-      <MainPage imageSrc={background} />
+      <NavBar navbarLinks={navbarLinks} imageSrc={TEDxHCMUSLogo} />
+      <MainPage />
     </Styled>
   );
 }

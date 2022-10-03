@@ -12,7 +12,7 @@ const Navbar = (props) => {
   return (
     <Styled>
       <nav className="navbar">
-        <a href="https://tedxhcmus.com/">
+        <a href="#">
           <img src={props.imageSrc} alt="TEDx HCMUS" className="image" />
         </a>
         {menuClicked ? (
@@ -74,7 +74,7 @@ const Styled = styled.div`
     font-size: 1rem;
     text-decoration: none;
     color: white;
-    text-align: center;    
+    text-align: center;
     padding: 20px 0px 20px 0px;
     margin: 0px 20px;
     border-style: solid;
