@@ -1,14 +1,31 @@
-![TEDxHCMUS Logo](public/logo.svg)
+# TEDx Ticket System
 
-# TEDx HCMUS Landing Page
+## Run the System
 
-Official [Website](https://tedxhcmus.com/) for TEDx HCMUS.
+We can easily run the whole with only a single command:
 
-## Stack
+```bash
+docker-compose up
+```
 
-1. [ReactJS](https://reactjs.org/)
-2. [Vite](https://vitejs.dev/)
+Docker will pull the MongoDB and Node.js images (if your machine does not have it before).
 
-## License
+The services can be run on the background with command:
 
-This project is licensed under the terms of the [MIT license](LICENSE).
+```bash
+docker-compose up -d --build
+```
+
+## Stop the System
+
+Stopping all the running containers is also simple with a single command:
+
+```bash
+docker-compose down
+```
+
+If you need to stop and remove all containers, networks, and all images used by any service in <em>docker-compose.yml</em> file, use the command:
+
+```bash
+docker-compose down --rmi all
+```
