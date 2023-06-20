@@ -1,6 +1,6 @@
 # TEDx Ticket System
 
-## Run the System
+## Run the Backend System
 
 We can easily run the whole with only a single command:
 
@@ -16,7 +16,7 @@ The services can be run on the background with command:
 docker-compose up -d --build
 ```
 
-## Stop the System
+## Stop the Backend System
 
 Stopping all the running containers is also simple with a single command:
 
@@ -29,3 +29,7 @@ If you need to stop and remove all containers, networks, and all images used by 
 ```bash
 docker-compose down --rmi all
 ```
+
+## Run the Frontend System
+
+The frontend system is built with React.js. Refer to the [README.md](./frontend/README.md) in the frontend folder for more details.
