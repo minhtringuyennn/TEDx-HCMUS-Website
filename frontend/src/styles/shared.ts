@@ -13,7 +13,6 @@ export const textTruncate = `
   text-overflow: ellipsis;
 `;
 
-export const primaryTextColor = '#363636';
 export const bodyGray = '#F7F7F7';
 export const light = '#FFC2C2';
 export const gray = '#adadad';
@@ -28,28 +27,14 @@ export const warning = '#FFA700';
 export const error = '#FA0B0B';
 export const info = '#1673DB';
 
-export type RotateIcon = Interpolation<{
-  isOpen: boolean;
-  openDegree?: number;
-  closedDegree?: number;
-}>;
-
-export const rotateIcon: RotateIcon = ({
-  isOpen,
-  openDegree = 180,
-  closedDegree = 0,
-}) => css`
-  transform: rotate(${isOpen ? openDegree : closedDegree}deg);
-  transition: transform 0.2s;
-  transform-origin: center;
-`;
-
-export const ButtonCss = css`
-  &:disabled {
-    background: #e8e8e8;
-    color: white !important;
-  }
-`;
+export const bigTitle = css`
+  font-family: 'Selima';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 100px;
+  text-transform: uppercasel
+  line-height: 116px;
+`
 
 export const scrollBarWidth = '6px';
 
@@ -94,16 +79,25 @@ export const spinAnimation = css`
   animation: ${spinAnimationFrame} 1s infinite;
 `;
 
-export const sizes = {
-  laptopL: '1024px',
-  laptopXl: '1370px',
-  laptopXXl: '1600px',
-};
+export const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  tablet: '768px',
+  laptop: '1024px',
+  laptopL: '1440px',
+  desktop: '2560px'
+}
 
-export const devices = {
-  laptopL: `(min-width: ${sizes.laptopL})`,
-  laptopXl: `(min-width: ${sizes.laptopXl})`,
-  laptopXXl: `(min-width: ${sizes.laptopXXl})`,
+export const device = {
+  mobileS: `(min-width: ${size.mobileS})`,
+  mobileM: `(min-width: ${size.mobileM})`,
+  mobileL: `(min-width: ${size.mobileL})`,
+  tablet: `(min-width: ${size.tablet})`,
+  laptop: `(min-width: ${size.laptop})`,
+  laptopL: `(min-width: ${size.laptopL})`,
+  desktop: `(min-width: ${size.desktop})`,
+  desktopL: `(min-width: ${size.desktop})`
 };
 
 export const TABLE_ROW_HEIGHT = 57;
@@ -116,9 +110,9 @@ export const TextContent = styled.p<{
   isTruncate?: boolean;
   align?: 'left' | 'right' | 'center';
 }>`
-  font-size: ${({ size = 14 }) => size}px;
+  font-size: ${({ size = 16 }) => size}px;
   font-weight: ${({ weight = 400 }) => weight};
-  line-height: ${({ lineHeight = 20 }) => lineHeight}px;
+  line-height: ${({ lineHeight = 24 }) => lineHeight}px;
   text-align: ${({ align }) => align};
   ${({ isTruncate }) => isTruncate && textTruncate}
 `;

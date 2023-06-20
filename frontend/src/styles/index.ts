@@ -1,11 +1,19 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Selima';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../assets/fonts/Selima.otf') format('otf');
+  }
+
   html {
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: overlay;
     scroll-behavior: smooth;
+    font-family: 'Be Vietnam Pro', 'Selima', Inter, Avenir, Helvetica, Arial, sans-serif, sans-serif;
 
     ${({ theme }) => theme.utils.scrollbar};
   }
@@ -20,14 +28,28 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     margin: 0;
-    background-color: #282c34;
-    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    background-color: #000;
+    font-family: 'Be Vietnam Pro', 'Selima', Inter, Avenir, Helvetica, Arial, sans-serif, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
+  section {
+    padding: 0 5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+  
   a {
     transition: all 0.2s;
     &:hover {
