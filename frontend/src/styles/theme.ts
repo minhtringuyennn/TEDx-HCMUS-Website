@@ -18,6 +18,7 @@ import {
   AlignItems,
   bigTitle,
   centerBackgroundImage,
+  size
 } from 'styles/shared';
 
 export type ThemeType = {
@@ -98,6 +99,7 @@ const sharedTheme = {
     normalTransition: '0.250s ease-in-out',
     centerBackgroundImage,
   },
+  size,
   spacing: {
     s: 4,
     m: 8,

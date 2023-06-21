@@ -12,9 +12,10 @@ const PrimaryButton = styled.button.attrs({
   cursor: pointer;
   box-sizing: border-box;
   border-radius: .25rem;
+  border: none;
   margin: 0;
-  padding: 1rem;
-  min-width: 10rem;
+  padding: 0 1rem;
+  height: 3rem;
   background: ${({ theme }) => theme.colors.primary.default};
   color: ${({ theme }) => theme.colors.textColor};
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -28,6 +29,11 @@ const PrimaryButton = styled.button.attrs({
   }
   &:focus-visible {
     outline: none;
+  }
+  @media (max-width: ${({theme}) => theme.size.sm}) {
+    height: 2rem;
+    font-size: .75rem;
+    padding: 0 .5rem;
   }
 `;
 

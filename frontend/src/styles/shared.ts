@@ -32,7 +32,7 @@ export const bigTitle = css`
   font-style: normal;
   font-weight: 400;
   font-size: 100px;
-  text-transform: uppercasel
+  text-transform: uppercase;
   line-height: 116px;
 `
 
@@ -80,28 +80,18 @@ export const spinAnimation = css`
 `;
 
 export const size = {
-  mobileS: '320px',
-  mobileM: '375px',
-  mobileL: '425px',
-  tablet: '768px',
-  laptop: '1024px',
-  laptopL: '1440px',
-  desktop: '2560px'
+  xl: '1920px',
+  lg: '1280px',
+  md: '960px',
+  sm: '600px',
 }
 
 export const device = {
-  mobileS: `(min-width: ${size.mobileS})`,
-  mobileM: `(min-width: ${size.mobileM})`,
-  mobileL: `(min-width: ${size.mobileL})`,
-  tablet: `(min-width: ${size.tablet})`,
-  laptop: `(min-width: ${size.laptop})`,
-  laptopL: `(min-width: ${size.laptopL})`,
-  desktop: `(min-width: ${size.desktop})`,
-  desktopL: `(min-width: ${size.desktop})`
+  xl: `(max-width: ${size.xl})`,
+  lg: `(max-width: ${size.lg})`,
+  md: `(max-width: ${size.md})`,
+  sm: `(max-width: ${size.md})`,
 };
-
-export const TABLE_ROW_HEIGHT = 57;
-export const TABLE_ROW_HEIGHT_DENSE = 50;
 
 export const TextContent = styled.p<{
   size?: number;
@@ -127,13 +117,6 @@ export const alignItems: AlignItems = ({ align = 'center' }) =>
     right: 'flex-end',
     center: 'center',
   }[align]);
-
-export const SMALL_RESOLUTION = '(max-width: 1500px)';
-export const TABLET_RESOLUTION = '(max-width: 1200px)';
-export const MIN_TABLET_RESOLUTION = '(min-width: 1150px)';
-export const SMALL_HEIGHT_RESOLUTION = '(max-height: 900px)';
-export const MOBILE_RESOLUTION = '(max-width: 500px)';
-export const MOBILE_TABLET_RESOLUTION = '(max-width: 800px)';
 
 export const centerBackgroundImage = css`
   background-repeat: no-repeat;
