@@ -2,8 +2,8 @@ import styled, { keyframes } from 'styled-components';
 import BrandLogo from 'icons/Logo';
 
 const Logo = () => (
-  <Styled href="https://www.facebook.com/tedxhcmus">
-    <CustomLogo/>
+  <Styled href="/">
+    <CustomLogo />
   </Styled>
 );
 
@@ -20,9 +20,8 @@ const CustomLogo = styled(BrandLogo).attrs({
 `;
 
 const Styled = styled.a`
-    &:hover {
-      opacity: 1
-    }
-    wwid
-`
+  &:hover {
+    opacity: 1;
+  }
+`;
 export default Logo;

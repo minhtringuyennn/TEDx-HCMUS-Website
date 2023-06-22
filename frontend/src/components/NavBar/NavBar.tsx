@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // import { FiMenu, FiX } from "react-icons/fi";
-import styled from "styled-components";
+import styled from 'styled-components';
 import Logo from 'components/Logo/Logo';
 import Button from 'components/Button/Button';
 
 const Navbar = () => (
-    <Styled>
-      <nav className="navbar">
-        <Logo/>
-        <Button type="primary">
-            Purchase Ticket
-        </Button>
-      </nav>
-    </Styled>
-  );
-
+  <Styled>
+    <nav className="navbar">
+      <Logo />
+      <Button type="primary"> Purchase Ticket</Button>
+    </nav>
+  </Styled>
+);
 
 const Styled = styled.div`
   .navbar {
@@ -27,7 +24,7 @@ const Styled = styled.div`
     padding: 0 80px;
     z-index: 5;
     background-color: rgba(0, 0, 0, 0.8);
-    @media (max-width: ${({theme}) => theme.size.sm}) {
+    @media (max-width: ${({ theme }) => theme.size.sm}) {
       padding: 0 1rem;
       height: 3rem;
     }

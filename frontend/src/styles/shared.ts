@@ -90,7 +90,7 @@ export const device = {
   xl: `(max-width: ${size.xl})`,
   lg: `(max-width: ${size.lg})`,
   md: `(max-width: ${size.md})`,
-  sm: `(max-width: ${size.md})`,
+  sm: `(max-width: ${size.sm})`,
 };
 
 export const TextContent = styled.p<{
