@@ -33,9 +33,12 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
   section {
     padding: 0 5rem;
+  }
+
+  h1, h2, h3 {
+    margin: 0;
   }
 
   h1 {
@@ -50,6 +53,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.25rem;
   }
   
+
   a {
     transition: all 0.2s;
     &:hover {
@@ -67,6 +71,20 @@ const GlobalStyle = createGlobalStyle`
   li {
     padding: 0;
     margin: 0;
+  
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
+    h1 {
+      font-size: 1.25rem
+    }
+
+    h2, h3 {
+      font-size: 1rem
+    }
+
+    body {
+      font-size: .75rem
+    }
+  }
   }
 `;
 

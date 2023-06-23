@@ -1,3 +1,3 @@
-import TEDxHCMUSLogo from "./icons/logo.svg";
+import HeroBanner from './images/TEDX SHIRT LOGO TRANSPARENT.png';
 
-export { TEDxHCMUSLogo };
+export default HeroBanner;
