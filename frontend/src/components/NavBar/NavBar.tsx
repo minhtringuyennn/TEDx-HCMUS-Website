@@ -15,16 +15,10 @@ const Navbar = () => (
 
 const Styled = styled.div`
   .navbar {
-<<<<<<< Updated upstream
-    position: sticky;
-    top: 0px;
-    height: 80px;
-=======
     position: fixed;
     top: 0px;
     height: 80px;
     width: 100%;
->>>>>>> Stashed changes
     display: flex;
     justify-content: space-between;
     align-items: center;
