@@ -18,7 +18,7 @@ import {
   AlignItems,
   bigTitle,
   centerBackgroundImage,
-  size
+  size,
 } from 'styles/shared';
 
 export type ThemeType = {
@@ -142,9 +142,9 @@ const theme: ThemeType = {
     },
     bodyGray,
     light,
-    gray,
-    darkGray,
-    lightGray,
+    gray: '#545454',
+    darkGray: '#333',
+    lightGray: '#8A8A8A',
     silver,
     bigTitle,
   },

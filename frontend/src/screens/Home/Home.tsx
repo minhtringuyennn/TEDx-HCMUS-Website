@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Navbar from 'components/NavBar/NavBar';
 import HeroBanner from 'assets';
 import Countdown from 'components/Countdown/Countdown';
-import Button from 'components/Button/Button';
+import CTAButton from 'components/CTAButton/CTAButton';
 
 const Home = () => (
   <Styled>
@@ -17,7 +17,7 @@ const Home = () => (
           <h3>Early bird ticket opens </h3>
           <Countdown date="2023-07-01T00:00:00+07:00" />
         </div>
-        <Button type="primary"> Purchase Ticket</Button>
+        <CTAButton />
       </div>
     </section>
   </Styled>
@@ -26,11 +26,9 @@ const Home = () => (
 const Styled = styled.div`
   section {
     height: 100vh;
-    z-index: 0;
     padding: 5rem;
   }
   .hero-img {
-    transform: rotate(-5.517deg);
     object-fit: contain;
     height: 100%;
   }

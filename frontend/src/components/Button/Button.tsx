@@ -11,14 +11,17 @@ const PrimaryButton = styled.button.attrs({
   text-transform: capitalize;
   cursor: pointer;
   box-sizing: border-box;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   border: none;
   margin: 0;
   padding: 0 1rem;
   height: 3rem;
   background: ${({ theme }) => theme.colors.primary.default};
   color: ${({ theme }) => theme.colors.textColor};
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   &:hover {
     background: ${({ theme }) => theme.colors.primary.p400};
   }
@@ -30,10 +33,10 @@ const PrimaryButton = styled.button.attrs({
   &:focus-visible {
     outline: none;
   }
-  @media (max-width: ${({theme}) => theme.size.sm}) {
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     height: 2rem;
-    font-size: .75rem;
-    padding: 0 .5rem;
+    font-size: 0.75rem;
+    padding: 0 0.5rem;
   }
 `;
 
@@ -61,18 +64,21 @@ const SecondaryButton = styled(TextButton).attrs({
 export interface ButtonProps {
   type?: string;
   children: React.ReactNode;
+  handleOnClick: () => void;
 }
 
-const Button = ({ type, children }: ButtonProps) => {
-  switch (type){
-    case "primary":
-      return <PrimaryButton>{children}</PrimaryButton>;
-    case "secondary":
-      return <SecondaryButton>{children}</SecondaryButton>;
-    case "text":
-      return <TextButton>{children}</TextButton>;
+const Button = ({ type, children, handleOnClick }: ButtonProps) => {
+  switch (type) {
+    case 'primary':
+      return <PrimaryButton onClick={handleOnClick}>{children}</PrimaryButton>;
+    case 'secondary':
+      return (
+        <SecondaryButton onClick={handleOnClick}>{children}</SecondaryButton>
+      );
+    case 'text':
+      return <TextButton onClick={handleOnClick}>{children}</TextButton>;
     default:
-      return <PrimaryButton>{children}</PrimaryButton>
+      return <PrimaryButton onClick={handleOnClick}>{children}</PrimaryButton>;
   }
-}
+};
 export default Button;

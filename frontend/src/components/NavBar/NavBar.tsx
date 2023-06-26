@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 // import { FiMenu, FiX } from "react-icons/fi";
 import styled from 'styled-components';
 import Logo from 'components/Logo/Logo';
-import Button from 'components/Button/Button';
+import CTAButton from 'components/CTAButton/CTAButton';
 
 const Navbar = () => (
   <Styled>
     <nav className="navbar">
       <Logo />
-      <Button type="primary"> Purchase Ticket</Button>
+      <CTAButton />
     </nav>
   </Styled>
 );
@@ -23,7 +23,6 @@ const Styled = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 80px;
-    z-index: 5;
     background-color: rgba(0, 0, 0, 0.8);
     @media (max-width: ${({ theme }) => theme.size.sm}) {
       padding: 0 1rem;

@@ -32,6 +32,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Be Vietnam Pro', 'Selima', Inter, Avenir, Helvetica, Arial, sans-serif, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    @media (max-width: ${({ theme }) => theme.size.sm}) {
+      font-size: .75rem;
+    }
   }
   section {
     padding: 0 5rem;
@@ -43,14 +46,23 @@ const GlobalStyle = createGlobalStyle`
 
   h1 {
     font-size: 2rem;
+    @media (max-width: ${({ theme }) => theme.size.sm}) {
+      font-size: 1.25rem;
+    }
   }
   
   h2 {
     font-size: 1.75rem;
+    @media (max-width: ${({ theme }) => theme.size.sm}) {
+      font-size: 1rem;
+    }
   }
 
   h3 {
     font-size: 1.25rem;
+    @media (max-width: ${({ theme }) => theme.size.sm}) {
+      font-size: 1rem;
+    }
   }
   
 
@@ -71,20 +83,6 @@ const GlobalStyle = createGlobalStyle`
   li {
     padding: 0;
     margin: 0;
-  
-  @media (max-width: ${({ theme }) => theme.size.sm}) {
-    h1 {
-      font-size: 1.25rem
-    }
-
-    h2, h3 {
-      font-size: 1rem
-    }
-
-    body {
-      font-size: .75rem
-    }
-  }
   }
 `;
 
