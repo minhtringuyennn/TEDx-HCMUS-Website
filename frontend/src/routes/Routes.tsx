@@ -22,6 +22,8 @@ const routes: RouteObject[] = [
         element: <Outlet />,
         children: [
           { path: AppPath.Home, element: <Screen.Home /> },
+          { path: AppPath.Track, element: <Screen.TrackTicket /> },
+          { path: AppPath.Purchase, element: <Screen.PurchaseTicket /> },
           {
             path: Path.ALL,
             element: <Navigate replace to={absolutePath(Path.NotFound)} />,

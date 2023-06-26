@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
 import { Search, Ticket } from 'icons';
@@ -10,27 +11,26 @@ const CTAButton = () => {
   return (
     <Styled>
       <Button type="primary" handleOnClick={toggleModal}>
-        {' '}
         Purchase Ticket
       </Button>
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
         <div className="content">
           <h3>Đặt vé TEDx Talk 2023: inSanity</h3>
           <div className="cards-container">
-            <button type="button" className="card">
+            <Link to="/app/track-ticket" replace className="card">
               <Search className="option-icon" />
               <div className="option">
                 <div className="option-title">Đã có vé</div>
                 <div className="option-description">Tra cứu đơn hàng</div>
               </div>
-            </button>
-            <button type="button" className="card">
+            </Link>
+            <Link to="/app/purchase-ticket" replace className="card">
               <Ticket className="option-icon" />
               <div className="option">
                 <div className="option-title">Chưa có vé</div>
                 <div className="option-description">Đặt vé ngay</div>
               </div>
-            </button>
+            </Link>
           </div>
         </div>
       </Modal>
@@ -53,6 +53,7 @@ const Styled = styled.div`
     width: inherit;
   }
   .card {
+    text-decoration: none;
     display: flex;
     width: 100%;
     overflow: hidden;
@@ -65,9 +66,9 @@ const Styled = styled.div`
     gap: 0.5rem;
     background: none;
     color: ${({ theme }) => theme.colors.lightGray};
-    font-family: inherit;
     transition: 200ms ease-in-out;
     &:hover {
+      opacity: 1;
       cursor: pointer;
       border: 2px solid ${({ theme }) => theme.colors.primary.default};
       color: ${({ theme }) => theme.colors.primary.default};

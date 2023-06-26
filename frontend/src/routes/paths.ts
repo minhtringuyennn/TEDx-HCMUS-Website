@@ -8,6 +8,8 @@ enum Path {
 
 export enum AppPath {
   Home = 'home',
+  Track = 'track-ticket',
+  Purchase = 'purchase-ticket',
 }
 
 export enum AuthPath {
