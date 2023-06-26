@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { HTMLProps } from 'react';
 
 const PrimaryButton = styled.button.attrs({
   className: 'primary-button',
@@ -61,24 +61,43 @@ const SecondaryButton = styled(TextButton).attrs({
   }
 `;
 
-export interface ButtonProps {
+export interface ButtonProps extends HTMLProps<HTMLButtonElement> {
   type?: string;
   children: React.ReactNode;
-  handleOnClick: () => void;
+  handleOnClick?: () => void;
 }
 
-const Button = ({ type, children, handleOnClick }: ButtonProps) => {
+const Button: React.FC<ButtonProps> = ({
+  type,
+  children,
+  handleOnClick,
+  ...props
+}: ButtonProps) => {
   switch (type) {
     case 'primary':
-      return <PrimaryButton onClick={handleOnClick}>{children}</PrimaryButton>;
+      return (
+        <PrimaryButton onClick={handleOnClick} {...props}>
+          {children}
+        </PrimaryButton>
+      );
     case 'secondary':
       return (
-        <SecondaryButton onClick={handleOnClick}>{children}</SecondaryButton>
+        <SecondaryButton onClick={handleOnClick} {...props}>
+          {children}
+        </SecondaryButton>
       );
     case 'text':
-      return <TextButton onClick={handleOnClick}>{children}</TextButton>;
+      return (
+        <TextButton onClick={handleOnClick} {...props}>
+          {children}
+        </TextButton>
+      );
     default:
-      return <PrimaryButton onClick={handleOnClick}>{children}</PrimaryButton>;
+      return (
+        <PrimaryButton onClick={handleOnClick} {...props}>
+          {children}
+        </PrimaryButton>
+      );
   }
 };
 export default Button;
