@@ -1,31 +1,47 @@
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Logo from 'components/Logo';
+import Stepper from 'components/Stepper';
+import Navbar from 'components/NavBar/NavBar';
+import Button from 'components/Button/Button';
+import { useStepper } from 'hooks';
+import StepTicket from './components/StepTicket';
+import StepInfo from './components/StepInfo';
+import StepBilling from './components/StepBilling';
 
 const PurchaseTicket = () => {
-  const { t } = useTranslation('not-found');
+  const { increment, decrement } = useStepper();
+
   return (
-    <Container>
-      <Logo />
-      <h2>{t('title')}</h2>
-      PurchaseTicket
-    </Container>
+    <Styled>
+      <section>
+        <Stepper>
+          <Stepper.Steps>
+            <Stepper.Step id="first" name="Chọn chỗ">
+              <StepTicket />
+            </Stepper.Step>
+            <Stepper.Step id="second" name="Điền thông tin">
+              <StepInfo />
+            </Stepper.Step>
+            <Stepper.Step id="third" name="Thanh toán">
+              <StepBilling />
+            </Stepper.Step>
+          </Stepper.Steps>
+        </Stepper>
+      </section>
+      <Navbar />
+    </Styled>
   );
 };
 
 export default PurchaseTicket;
 
-const Container = styled.section`
-  ${({ theme }) => theme.utils.centerFlex};
-  flex-direction: column;
-  height: 100%;
-  h2 {
-    font-size: 4rem;
-    margin: 10px;
+const Styled = styled.div`
+  section {
+    height: 100vh;
+    padding: 5rem;
   }
-
-  a {
-    font-size: 2rem;
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
+    section {
+      padding: 3rem 1rem;
+    }
   }
 `;

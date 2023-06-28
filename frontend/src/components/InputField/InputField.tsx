@@ -31,7 +31,6 @@ const Styled = styled.div`
     font-weight: 500;
     transform-origin: 0 0;
     transition: all 0.2s ease;
-    pointer-events: none;
   }
   .inp .focus-bg {
     position: absolute;
@@ -52,28 +51,35 @@ const Styled = styled.div`
     font-size: 16px;
     font-weight: 400;
     background: none;
-    box-shadow: inset 0 -2px 0 ${({ theme }) => theme.colors.textColor};
+    box-shadow: inset 0 -1px 0 ${({ theme }) => theme.colors.darkGray};
     color: ${({ theme }) => theme.colors.textColor};
     transition: all 0.15s ease;
+    @media (max-width: ${({ theme }) => theme.size.sm}) {
+      font-size: 12px;
+    }
   }
   .inp input:hover {
-    box-shadow: inset 0 -2px 0 ${({ theme }) => theme.colors.textColor};
+    outline: none;
+    box-shadow: inset 0 -1px 0 ${({ theme }) => theme.colors.lightGray};
   }
   .inp input:not(:-moz-placeholder-shown) + .label {
-    color: ${({ theme }) => theme.colors.textColor};
+    outline: none;
+    color: ${({ theme }) => theme.colors.lightGray};
     transform: translate3d(0, -16px, 0) scale(0.75);
   }
   .inp input:not(:-ms-input-placeholder) + .label {
-    color: ${({ theme }) => theme.colors.textColor};
+    outline: none;
+    color: ${({ theme }) => theme.colors.lightGray};
     transform: translate3d(0, -16px, 0) scale(0.75);
   }
   .inp input:not(:placeholder-shown) + .label {
-    color: ${({ theme }) => theme.colors.textColor};
+    outline: none;
+    color: ${({ theme }) => theme.colors.lightGray};
     transform: translate3d(0, -16px, 0) scale(0.75);
   }
   .inp input:focus {
     outline: none;
-    box-shadow: inset 0 -2px 0 ${({ theme }) => theme.colors.primary.default};
+    box-shadow: inset 0 -1px 0 ${({ theme }) => theme.colors.primary.default};
   }
   .inp input:focus + .label {
     color: ${({ theme }) => theme.colors.primary.default};

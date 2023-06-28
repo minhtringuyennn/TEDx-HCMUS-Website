@@ -28,7 +28,7 @@ const PrimaryButton = styled.button.attrs({
   &:disabled {
     cursor: not-allowed;
     background: ${({ theme }) => theme.colors.primary.p900};
-    color: ${({ theme }) => theme.colors.darkGray};
+    color: ${({ theme }) => theme.colors.lightGray};
   }
   &:focus-visible {
     outline: none;
@@ -46,12 +46,21 @@ const TextButton = styled(PrimaryButton).attrs({
 })`
   background: none;
   &:hover {
-    background: rgba(107, 18, 3, 0.7);
+    background: ${({ theme }) => theme.colors.primary.p900};
   }
 `;
 
 const SecondaryButton = styled(TextButton).attrs({
   className: 'secondary-button',
+  type: 'button',
+})`
+background: ${({ theme }) => theme.colors.primary.p900};
+&:hover {
+  background: ${({ theme }) => theme.colors.primary.p800};
+`;
+
+const OutlinedButton = styled(TextButton).attrs({
+  className: 'outlined-button',
   type: 'button',
 })`
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -64,40 +73,24 @@ const SecondaryButton = styled(TextButton).attrs({
 export interface ButtonProps extends HTMLProps<HTMLButtonElement> {
   type?: string;
   children: React.ReactNode;
-  handleOnClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
   type,
   children,
-  handleOnClick,
   ...props
 }: ButtonProps) => {
   switch (type) {
     case 'primary':
-      return (
-        <PrimaryButton onClick={handleOnClick} {...props}>
-          {children}
-        </PrimaryButton>
-      );
+      return <PrimaryButton {...props}>{children}</PrimaryButton>;
     case 'secondary':
-      return (
-        <SecondaryButton onClick={handleOnClick} {...props}>
-          {children}
-        </SecondaryButton>
-      );
+      return <SecondaryButton {...props}>{children}</SecondaryButton>;
+    case 'outlined':
+      return <OutlinedButton {...props}>{children}</OutlinedButton>;
     case 'text':
-      return (
-        <TextButton onClick={handleOnClick} {...props}>
-          {children}
-        </TextButton>
-      );
+      return <TextButton {...props}>{children}</TextButton>;
     default:
-      return (
-        <PrimaryButton onClick={handleOnClick} {...props}>
-          {children}
-        </PrimaryButton>
-      );
+      return <PrimaryButton {...props}>{children}</PrimaryButton>;
   }
 };
 export default Button;

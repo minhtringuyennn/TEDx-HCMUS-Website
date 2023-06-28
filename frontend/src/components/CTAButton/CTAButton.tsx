@@ -10,8 +10,8 @@ const CTAButton = () => {
   const toggleModal = () => setModalState(!isModalOpen);
   return (
     <Styled>
-      <Button type="primary" handleOnClick={toggleModal}>
-        Purchase Ticket
+      <Button type="primary" onClick={toggleModal}>
+        Đặt vé ngay
       </Button>
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
         <div className="content">
