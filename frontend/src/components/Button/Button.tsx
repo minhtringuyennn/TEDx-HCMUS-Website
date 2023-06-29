@@ -3,7 +3,6 @@ import React, { HTMLProps } from 'react';
 
 const PrimaryButton = styled.button.attrs({
   className: 'primary-button',
-  type: 'button',
 })`
   font-size: 1rem;
   font-family: 'Be Vietnam pro';
@@ -42,7 +41,6 @@ const PrimaryButton = styled.button.attrs({
 
 const TextButton = styled(PrimaryButton).attrs({
   className: 'text-button',
-  type: 'button',
 })`
   background: none;
   &:hover {
@@ -52,7 +50,6 @@ const TextButton = styled(PrimaryButton).attrs({
 
 const SecondaryButton = styled(TextButton).attrs({
   className: 'secondary-button',
-  type: 'button',
 })`
 background: ${({ theme }) => theme.colors.primary.p900};
 &:hover {
@@ -61,7 +58,6 @@ background: ${({ theme }) => theme.colors.primary.p900};
 
 const OutlinedButton = styled(TextButton).attrs({
   className: 'outlined-button',
-  type: 'button',
 })`
   border: 1px solid rgba(255, 255, 255, 0.5);
   &:hover {
@@ -71,16 +67,16 @@ const OutlinedButton = styled(TextButton).attrs({
 `;
 
 export interface ButtonProps extends HTMLProps<HTMLButtonElement> {
-  type?: string;
+  typeFill?: string;
   children: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
-  type,
+  typeFill,
   children,
   ...props
 }: ButtonProps) => {
-  switch (type) {
+  switch (typeFill) {
     case 'primary':
       return <PrimaryButton {...props}>{children}</PrimaryButton>;
     case 'secondary':

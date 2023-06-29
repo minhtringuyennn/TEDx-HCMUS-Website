@@ -28,6 +28,18 @@ const BankContainer = ({ title, value, copy }: BankInfo) => (
 
 const StepBilling = () => {
   const { increment, decrement } = useStepper();
+  async function downloadImage(imageSrc: string) {
+    const image = await fetch(imageSrc);
+    const imageBlog = await image.blob();
+    const imageURL = URL.createObjectURL(imageBlog);
+
+    const link = document.createElement('a');
+    link.href = imageURL;
+    link.download = 'image file name here';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
   return (
     <StepBody>
       <div className="grid-left">
@@ -51,14 +63,15 @@ const StepBilling = () => {
           dịch.
         </p>
         <ButtonGroup>
-          <Button type="text" onClick={decrement}>
+          <Button typeFill="text" onClick={decrement}>
             Trở về
           </Button>
           <Button onClick={increment}>Xác nhận</Button>
         </ButtonGroup>
       </div>
       <div className="grid-right">
-        <h2>Quét mã để thanh toán</h2>
+        <h3>Quét mã để thanh toán</h3>
+        <Button>Tải ảnh</Button>
       </div>
     </StepBody>
   );

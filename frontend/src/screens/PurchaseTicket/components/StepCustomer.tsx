@@ -2,6 +2,8 @@ import { useStepper } from 'hooks';
 import Button from 'components/Button';
 import styled from 'styled-components';
 import InputField from 'components/InputField/InputField';
+import { Form, ConfigProvider, Input, FormInstance } from 'antd';
+import { increment } from 'store/reducers/counter.reducer';
 
 function numberWithCommas(x: number) {
   let s = x.toString();
@@ -10,18 +12,48 @@ function numberWithCommas(x: number) {
   return s;
 }
 
-const CustomerInfo = () => (
-  <InfoSection>
-    <h3>Thông tin người đặt</h3>
-    <div className="input-row">
-      <InputField label="Họ và tên" className="input" />
-    </div>
-    <div className="input-row">
-      <InputField label="Email" className="input" />
-      <InputField label="Số điện thoại" className="input" />
-    </div>
-  </InfoSection>
-);
+const CustomerInfo = () => {
+  const form = Form.useFormInstance();
+  const onFinish = (values: any) => {
+    console.log(values);
+    form.setFieldsValue(values);
+  };
+  return (
+    <InfoSection>
+      <h3>Thông tin người đặt</h3>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorText: '#fff',
+            fontFamily: 'Be Vietnam Pro',
+            paddingXS: 4,
+          },
+        }}
+      >
+        <Form
+          layout="vertical"
+          style={{ width: '100%', color: '#fff' }}
+          onFinish={onFinish}
+          form={form}
+          name="ticketCustomerForm"
+        >
+          <Form.Item label="Họ và tên" name="FullName" className="form-item">
+            <InputField placeholder="Nhập họ và tên" className="form-item" />
+          </Form.Item>
+          <Form.Item label="Email" name="Email" className="form-item">
+            <InputField placeholder="Nhập email" className="form-item" />
+          </Form.Item>
+          <Form.Item label="Số điện thoại" name="Phone" className="form-item">
+            <InputField
+              placeholder="Nhập số điện thoại"
+              className="form-item"
+            />
+          </Form.Item>
+        </Form>
+      </ConfigProvider>
+    </InfoSection>
+  );
+};
 
 const BookingInfo = () => {
   const booking = [
@@ -65,7 +97,10 @@ const BookingInfo = () => {
     </InfoSection>
   );
 };
-
+const SubmitStep = () => {
+  const { increment, decrement } = useStepper();
+  return <Button type="submit">Submit sub form</Button>;
+};
 const StepInfo = () => {
   const { increment, decrement } = useStepper();
 
@@ -75,10 +110,12 @@ const StepInfo = () => {
         <CustomerInfo />
         <BookingInfo />
         <ButtonGroup>
-          <Button type="text" onClick={decrement}>
+          <Button typeFill="text" onClick={decrement}>
             Trở về
           </Button>
-          <Button onClick={increment}>Tiếp theo</Button>
+          <Button onClick={increment} type="submit">
+            Tiếp theo
+          </Button>
         </ButtonGroup>
       </div>
     </StepBody>
@@ -125,19 +162,9 @@ const InfoSection = styled.div`
   align-items: flex-start;
   gap: 12px;
   align-self: stretch;
-  .input {
-    margin-top: 8px;
+  .form-item {
     width: 100%;
-  }
-  .input-row {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    width: 100%;
-    @media (max-width: ${({ theme }) => theme.size.sm}) {
-      flex-direction: column;
-      gap: 12px;
-    }
+    margin-bottom: 12px;
   }
   .booking-des {
     width: 100%;
@@ -168,8 +195,8 @@ const InfoSection = styled.div`
   }
   @media (max-width: ${({ theme }) => theme.size.sm}) {
     gap: 8px;
-    .input {
-      margin-top: 4px;
+    label {
+      font-size: 12px !important;
     }
   }
 `;

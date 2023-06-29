@@ -33,7 +33,7 @@ const ClipboardCopy = ({ copyText }: ClipboardProps) => {
   };
 
   return (
-    <ClipboardCopyButton type="secondary" onClick={handleCopyClick}>
+    <ClipboardCopyButton typeFill="secondary" onClick={handleCopyClick}>
       <span>{isCopied ? 'Copied!' : 'Copy'}</span>
     </ClipboardCopyButton>
   );

@@ -5,23 +5,30 @@ import HeroBanner from 'assets';
 import Countdown from 'components/Countdown/Countdown';
 import CTAButton from 'components/CTAButton/CTAButton';
 
-const Home = () => (
-  <Styled>
-    <Navbar />
-    <section className="grid-container">
-      <div className="grid-item-a">
-        <img className="hero-img" src={HeroBanner} alt="Hero banner inSanity" />
-      </div>
-      <div className="container grid-item-b">
-        <div className="content">
-          <h3>Hạn mua vé early bird</h3>
-          <Countdown date="2023-07-01T00:00:00+07:00" />
+const Home = () => {
+  const date = '2023-07-01T00:00:00+07:00';
+  return (
+    <Styled>
+      <Navbar />
+      <section className="grid-container">
+        <div className="grid-item-a">
+          <img
+            className="hero-img"
+            src={HeroBanner}
+            alt="Hero banner inSanity"
+          />
         </div>
-        <CTAButton />
-      </div>
-    </section>
-  </Styled>
-);
+        <div className="container grid-item-b">
+          <div className="content">
+            <h3>Hạn mua vé early bird</h3>
+            <Countdown date={date} />
+          </div>
+          <CTAButton />
+        </div>
+      </section>
+    </Styled>
+  );
+};
 
 const Styled = styled.div`
   section {
