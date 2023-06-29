@@ -13,7 +13,6 @@ export const textTruncate = `
   text-overflow: ellipsis;
 `;
 
-export const primaryTextColor = '#363636';
 export const bodyGray = '#F7F7F7';
 export const light = '#FFC2C2';
 export const gray = '#adadad';
@@ -28,28 +27,14 @@ export const warning = '#FFA700';
 export const error = '#FA0B0B';
 export const info = '#1673DB';
 
-export type RotateIcon = Interpolation<{
-  isOpen: boolean;
-  openDegree?: number;
-  closedDegree?: number;
-}>;
-
-export const rotateIcon: RotateIcon = ({
-  isOpen,
-  openDegree = 180,
-  closedDegree = 0,
-}) => css`
-  transform: rotate(${isOpen ? openDegree : closedDegree}deg);
-  transition: transform 0.2s;
-  transform-origin: center;
-`;
-
-export const ButtonCss = css`
-  &:disabled {
-    background: #e8e8e8;
-    color: white !important;
-  }
-`;
+export const bigTitle = css`
+  font-family: 'Selima';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 100px;
+  text-transform: uppercase;
+  line-height: 116px;
+`
 
 export const scrollBarWidth = '6px';
 
@@ -94,20 +79,19 @@ export const spinAnimation = css`
   animation: ${spinAnimationFrame} 1s infinite;
 `;
 
-export const sizes = {
-  laptopL: '1024px',
-  laptopXl: '1370px',
-  laptopXXl: '1600px',
-};
+export const size = {
+  xl: '1920px',
+  lg: '1280px',
+  md: '960px',
+  sm: '600px',
+}
 
-export const devices = {
-  laptopL: `(min-width: ${sizes.laptopL})`,
-  laptopXl: `(min-width: ${sizes.laptopXl})`,
-  laptopXXl: `(min-width: ${sizes.laptopXXl})`,
+export const device = {
+  xl: `(max-width: ${size.xl})`,
+  lg: `(max-width: ${size.lg})`,
+  md: `(max-width: ${size.md})`,
+  sm: `(max-width: ${size.sm})`,
 };
-
-export const TABLE_ROW_HEIGHT = 57;
-export const TABLE_ROW_HEIGHT_DENSE = 50;
 
 export const TextContent = styled.p<{
   size?: number;
@@ -116,9 +100,9 @@ export const TextContent = styled.p<{
   isTruncate?: boolean;
   align?: 'left' | 'right' | 'center';
 }>`
-  font-size: ${({ size = 14 }) => size}px;
+  font-size: ${({ size = 16 }) => size}px;
   font-weight: ${({ weight = 400 }) => weight};
-  line-height: ${({ lineHeight = 20 }) => lineHeight}px;
+  line-height: ${({ lineHeight = 24 }) => lineHeight}px;
   text-align: ${({ align }) => align};
   ${({ isTruncate }) => isTruncate && textTruncate}
 `;
@@ -133,13 +117,6 @@ export const alignItems: AlignItems = ({ align = 'center' }) =>
     right: 'flex-end',
     center: 'center',
   }[align]);
-
-export const SMALL_RESOLUTION = '(max-width: 1500px)';
-export const TABLET_RESOLUTION = '(max-width: 1200px)';
-export const MIN_TABLET_RESOLUTION = '(min-width: 1150px)';
-export const SMALL_HEIGHT_RESOLUTION = '(max-height: 900px)';
-export const MOBILE_RESOLUTION = '(max-width: 500px)';
-export const MOBILE_TABLET_RESOLUTION = '(max-width: 800px)';
 
 export const centerBackgroundImage = css`
   background-repeat: no-repeat;

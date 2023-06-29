@@ -13,10 +13,9 @@ const Layout = () => (
 
 export const Main = styled.main.attrs({ className: 'main' })`
   text-align: center;
-  background-color: #282c34;
+  background-color: #000;
   color: white;
   height: inherit;
-  padding: 1rem;
   max-height: 1440px;
 `;
 

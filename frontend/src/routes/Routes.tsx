@@ -18,15 +18,16 @@ const routes: RouteObject[] = [
     element: <Layout />,
     children: [
       {
-        path: Path.App,
-        element: <Outlet />,
-        children: [
-          { path: AppPath.Home, element: <Screen.Home /> },
-          {
-            path: Path.ALL,
-            element: <Navigate replace to={absolutePath(Path.NotFound)} />,
-          },
-        ],
+        path: Path.Home,
+        element: <Screen.Home />,
+      },
+      {
+        path: Path.Track,
+        element: <Screen.TrackTicket />,
+      },
+      {
+        path: Path.Purchase,
+        element: <Screen.PurchaseTicket />,
       },
       {
         path: absolutePath(Path.ALL),
@@ -35,7 +36,7 @@ const routes: RouteObject[] = [
       { path: absolutePath(Path.NotFound), element: <Screen.NotFound /> },
       {
         path: Path.ROOT,
-        element: <Navigate replace to={join(Path.App, AppPath.Home)} />,
+        element: <Navigate replace to={Path.Home} />,
       },
       {
         path: Path.ALL,
