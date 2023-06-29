@@ -14,7 +14,7 @@ const Home = () => (
       </div>
       <div className="container grid-item-b">
         <div className="content">
-          <h3>Early bird ticket opens </h3>
+          <h3>Hạn mua vé early bird</h3>
           <Countdown date="2023-07-01T00:00:00+07:00" />
         </div>
         <CTAButton />

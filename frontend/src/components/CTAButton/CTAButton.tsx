@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
 import { Search, Ticket } from 'icons';
+import Path from 'routes/paths';
 
 const CTAButton = () => {
   const [isModalOpen, setModalState] = React.useState(false);
@@ -17,14 +18,14 @@ const CTAButton = () => {
         <div className="content">
           <h3>Đặt vé TEDx Talk 2023: inSanity</h3>
           <div className="cards-container">
-            <Link to="/app/track-ticket" replace className="card">
+            <Link to={`/${Path.Track}`} replace className="card">
               <Search className="option-icon" />
               <div className="option">
                 <div className="option-title">Đã có vé</div>
                 <div className="option-description">Tra cứu đơn hàng</div>
               </div>
             </Link>
-            <Link to="/app/purchase-ticket" replace className="card">
+            <Link to={`/${Path.Purchase}`} replace className="card">
               <Ticket className="option-icon" />
               <div className="option">
                 <div className="option-title">Chưa có vé</div>

@@ -8,7 +8,7 @@ const Input: React.FC<InputProps> = ({ label, ...props }) => (
   <Styled {...props}>
     <label htmlFor="inp" className="inp">
       <input id="inp" placeholder="&nbsp;" {...props} />
-      <span className="label">{label == null ? 'label' : label}</span>
+      <span className="label">{label === null ? 'label' : label}</span>
       <span className="focus-bg" />
     </label>
   </Styled>

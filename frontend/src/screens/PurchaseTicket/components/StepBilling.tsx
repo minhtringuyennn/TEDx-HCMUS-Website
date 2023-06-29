@@ -121,7 +121,7 @@ const StepBody = styled.div`
   }
   @media (max-width: ${({ theme }) => theme.size.sm}) {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 40px;
     .grid-left {
       gap: 8px;
