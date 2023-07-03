@@ -11,7 +11,7 @@ const CTAButton = () => {
   const toggleModal = () => setModalState(!isModalOpen);
   return (
     <Styled>
-      <Button type="primary" onClick={toggleModal}>
+      <Button typeFill="primary" onClick={toggleModal}>
         Đặt vé ngay
       </Button>
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
@@ -95,20 +95,28 @@ const Styled = styled.div`
     .content {
       gap: 1rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .cards-container {
       flex-direction: column;
       gap: 1rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .card {
       flex-direction: row;
       padding: 1rem;
       gap: 1rem;
       justify-content: start;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .option-icon {
       width: 3rem;
       height: 3rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .option {
       align-items: flex-start;
     }

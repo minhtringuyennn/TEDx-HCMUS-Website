@@ -1,9 +1,44 @@
 import styled from 'styled-components';
-import React, { HTMLProps } from 'react';
+import React, { ButtonHTMLAttributes, HTMLProps } from 'react';
 
-const PrimaryButton = styled.button.attrs({
-  className: 'primary-button',
-})`
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  typeFill?: string;
+  children: React.ReactNode;
+}
+
+const Button: React.FC<ButtonProps> = ({
+  typeFill,
+  children,
+  ...props
+}: ButtonProps) => (
+  <Styled>
+    <CustomButton className={`${typeFill}-btn`} {...props}>
+      {children}
+    </CustomButton>
+  </Styled>
+);
+export default Button;
+const Styled = styled.div`
+  .text-btn {
+    background: none !important;    
+    &:hover {
+      background: ${({ theme }) => theme.colors.primary.p900};
+    }
+  }
+  .secondary-btn {
+    background: ${({ theme }) => theme.colors.primary.p900};
+    &:hover {
+      background: ${({ theme }) => theme.colors.primary.p800};
+  }
+  .outlined-btn {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    &:hover {
+      background: rgba(107, 18, 3, 0.7);
+      border: 1px solid rgba(255, 255, 255, 1);
+    }
+  }
+`;
+const CustomButton = styled.button`
   font-size: 1rem;
   font-family: 'Be Vietnam pro';
   font-weight: bold;
@@ -15,12 +50,12 @@ const PrimaryButton = styled.button.attrs({
   margin: 0;
   padding: 0 1rem;
   height: 3rem;
-  background: ${({ theme }) => theme.colors.primary.default};
   color: ${({ theme }) => theme.colors.textColor};
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background: ${({ theme }) => theme.colors.primary.default};
   &:hover {
     background: ${({ theme }) => theme.colors.primary.p400};
   }
@@ -38,55 +73,3 @@ const PrimaryButton = styled.button.attrs({
     padding: 0 0.5rem;
   }
 `;
-
-const TextButton = styled(PrimaryButton).attrs({
-  className: 'text-button',
-})`
-  background: none;
-  &:hover {
-    background: ${({ theme }) => theme.colors.primary.p900};
-  }
-`;
-
-const SecondaryButton = styled(TextButton).attrs({
-  className: 'secondary-button',
-})`
-background: ${({ theme }) => theme.colors.primary.p900};
-&:hover {
-  background: ${({ theme }) => theme.colors.primary.p800};
-`;
-
-const OutlinedButton = styled(TextButton).attrs({
-  className: 'outlined-button',
-})`
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  &:hover {
-    background: rgba(107, 18, 3, 0.7);
-    border: 1px solid rgba(255, 255, 255, 1);
-  }
-`;
-
-export interface ButtonProps extends HTMLProps<HTMLButtonElement> {
-  typeFill?: string;
-  children: React.ReactNode;
-}
-
-const Button: React.FC<ButtonProps> = ({
-  typeFill,
-  children,
-  ...props
-}: ButtonProps) => {
-  switch (typeFill) {
-    case 'primary':
-      return <PrimaryButton {...props}>{children}</PrimaryButton>;
-    case 'secondary':
-      return <SecondaryButton {...props}>{children}</SecondaryButton>;
-    case 'outlined':
-      return <OutlinedButton {...props}>{children}</OutlinedButton>;
-    case 'text':
-      return <TextButton {...props}>{children}</TextButton>;
-    default:
-      return <PrimaryButton {...props}>{children}</PrimaryButton>;
-  }
-};
-export default Button;

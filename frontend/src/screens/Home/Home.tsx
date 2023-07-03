@@ -65,20 +65,28 @@ const Styled = styled.div`
     place-self: start center;
   }
 
-  @media (max-width: ${({ theme }) => theme.size.sm}) {
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     section {
       padding: 3rem 1rem;
     }
-    .container {
-      gap: 0.5rem;
-    }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .grid-container {
       grid-template-rows: min-content auto;
     }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
+    .container {
+      gap: 0.5rem;
+    }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .grid-item-a {
       width: 100%;
       height: auto;
     }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .hero-img {
       width: 100%;
       height: auto;

@@ -168,10 +168,12 @@ const Styles = styled.div`
     font-weight: 700;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .Countdown-col {
       width: 3rem;
     }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .Countdown-col strong {
       font-size: 1.25rem;
       line-height: 2.25rem;

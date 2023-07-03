@@ -102,11 +102,15 @@ const CustomModal = styled.div`
       width: 1rem;
       padding: 2px;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .modal-box {
       width: 100%;
       margin: 1rem;
       border-radius: 0.5rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .modal-content {
       padding: 1.25rem 0 0 0;
     }
