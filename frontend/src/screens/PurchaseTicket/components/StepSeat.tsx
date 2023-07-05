@@ -96,9 +96,6 @@ const ButtonGroup = styled.div`
   gap: 1rem;
   width: 100%;
   margin-top: 20px;
-  button {
-    width: 50%;
-  }
   @media (max-width: ${({ theme }) => theme.size.sm}) {
     margin-top: 8px;
   }

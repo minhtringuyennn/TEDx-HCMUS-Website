@@ -147,7 +147,4 @@ const ButtonGroup = styled.div`
   flex-direction: row;
   gap: 1rem;
   width: 100%;
-  button {
-    width: 50%;
-  }
 `;
