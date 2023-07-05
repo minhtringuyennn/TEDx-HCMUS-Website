@@ -4,6 +4,7 @@ import Navbar from 'components/NavBar/NavBar';
 import HeroBanner from 'assets';
 import Countdown from 'components/Countdown/Countdown';
 import CTAButton from 'components/CTAButton/CTAButton';
+import About from './Components/AboutSection';
 
 const Home = () => {
   const date = '2023-07-01T00:00:00+07:00';
@@ -26,6 +27,7 @@ const Home = () => {
           <CTAButton />
         </div>
       </section>
+      <About />
     </Styled>
   );
 };
@@ -33,7 +35,7 @@ const Home = () => {
 const Styled = styled.div`
   section {
     height: 100vh;
-    padding: 5rem;
+    padding: 80px 80px 0 80px;
   }
   .hero-img {
     object-fit: contain;
@@ -68,6 +70,8 @@ const Styled = styled.div`
   @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     section {
       padding: 3rem 1rem;
+      padding-bottom: 0;
+      height: auto;
     }
   }
   @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
