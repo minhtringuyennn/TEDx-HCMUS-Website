@@ -1,4 +1,4 @@
-import { RootState } from 'store/reducers';
+import { RootState } from '../reducers';
 
 const stepperSelector = (state: RootState) => state.stepper;
 

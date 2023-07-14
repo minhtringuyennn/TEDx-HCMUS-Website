@@ -12,6 +12,7 @@ const SponsorVendor = ({ name, list, size }: SponsorProps) => (
     <div className="sponsor-list">
       {list.map((item) => (
         <img
+          key={item.name}
           style={{ height: `${size * 100}%` }}
           src={item.src}
           alt={item.name}
@@ -42,7 +43,12 @@ const Vendor = styled.div`
 const Sponsor = () => (
   <Styled>
     {sponsorData.map((item) => (
-      <SponsorVendor name={item.type} list={item.list} size={item.size} />
+      <SponsorVendor
+        key={item.type}
+        name={item.type}
+        list={item.list}
+        size={item.size}
+      />
     ))}
   </Styled>
 );

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import Navbar from 'components/NavBar/NavBar';
 import InputField from 'components/InputField';
-import Button from 'components/Button/Button';
 import { Form, Space } from 'antd';
 import { useQuery, QueryStatus } from '@tanstack/react-query';
 
-import { TicketAPI } from 'api/clients/placeholder/methods';
-import { GetTicket } from 'api/clients/placeholder/params';
-import type { Ticket } from 'api/clients/placeholder/response';
-import { APIErrorConfig } from 'api/types';
+import Navbar from '../../components/NavBar/NavBar';
+
+import TicketAPI from '../../api/clients/ticket/methods';
+import type { GetTicket } from '../../api/clients/ticket/params';
+import type { Ticket } from '../../api/clients/ticket/response';
+import type { APIErrorConfig } from '../../api/types';
 
 function useQueryTicket(transactionId: GetTicket): {
   data: Ticket;

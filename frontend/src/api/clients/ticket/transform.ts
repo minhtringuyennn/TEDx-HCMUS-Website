@@ -1,4 +1,4 @@
-import * as Response from 'api/clients/placeholder/response';
+import * as Response from './response';
 
 export const ticketResponse = (ticket: Response.Ticket) => ticket;
 

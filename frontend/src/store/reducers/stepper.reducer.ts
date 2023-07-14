@@ -1,8 +1,7 @@
-import React from 'react';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface StepperState {
-  steps: String[];
+  steps: string[];
   currentStep: number;
 }
 
@@ -24,7 +23,7 @@ const stepper = createSlice({
       currentStep:
         state.currentStep === 0 ? state.currentStep : state.currentStep - 1,
     }),
-    setSteps: (state, action: PayloadAction<String[]>) => ({
+    setSteps: (state, action: PayloadAction<string[]>) => ({
       ...state,
       steps: action.payload,
     }),

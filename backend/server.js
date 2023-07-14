@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
 const db = require("./app/models");
-const { TRIGGER_REFRESH_TIME, TRIGGER_CRON_JOB } = require("./app/common/constants.js");
+const { TRIGGER_REFRESH_TIME, TRIGGER_CRON_JOB, DB_KEY } = require("./app/common/constants.js");
 const { setCredentialIntoDB, refreshCredential } = require("./app/common/helpers.js");
 
 const app = express();
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const System = db.system;
-
+const Seat = db.seat;
 const BankCredential = db.bank_credential;
 
 db.mongoose
@@ -104,6 +104,29 @@ cron.schedule(TRIGGER_CRON_JOB, async () => {
     const current_time = Date.now();
 
     const system = await System.findOne();
+
+    const seats = await Seat.find();
+    const availableSeats = seats.filter((seat) => seat.seatStatus === "available");
+    const bookedSeats = seats.filter((seat) => seat.seatStatus === "booked");
+    const reservedSeats = seats.filter((seat) => seat.seatStatus === "reserved");
+
+    // update system
+    System.findOneAndUpdate(
+      { _id: DB_KEY.SYSTEM },
+      {
+        availableSeats: availableSeats,
+        bookedSeats: bookedSeats,
+        reservedSeats: reservedSeats,
+      },
+      { new: true, useFindAndModify: false }
+    )
+      .then((data) => {
+        console.log("Updated system: ", data);
+      })
+      .catch((err) => {
+        console.log("Error when updating system: ", err);
+      });
+
     const { bankVerifyStatus } = system;
     if (!bankVerifyStatus) {
       console.error("Bank Verify Status is down! Skip refreshing token...");

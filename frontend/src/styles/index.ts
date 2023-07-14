@@ -37,9 +37,6 @@ const GlobalStyle = createGlobalStyle`
       line-height: 1.125rem;
     }
   }
-  section {
-    padding: 0 5rem;
-  }
 
   h1, h2, h3 {
     margin: 0;

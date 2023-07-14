@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from 'utils/test-utils';
 import List from 'components/List';
-import type { Post } from 'api/clients/placeholder/response';
+import type { Post } from 'api/clients/ticket/response';
 import posts from 'mocks/posts.json';
 
 const list = posts as Post[];

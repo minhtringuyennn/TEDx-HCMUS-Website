@@ -1,7 +1,8 @@
 import axios from 'axios';
-import environment from 'constants/config';
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
-import createClient, { createAuthHeaderSetter } from 'api/client';
+
+import environment from '../../../constants/config';
+import createClient, { createAuthHeaderSetter } from '../../client';
 
 const config: AxiosRequestConfig = { baseURL: environment.placeholderBaseURL };
 

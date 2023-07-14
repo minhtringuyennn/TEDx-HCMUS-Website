@@ -4,7 +4,7 @@ import StepperSelector from 'store/selectors/stepper.selectors';
 import * as Action from 'store/reducers/stepper.reducer';
 import { RootState } from 'store/reducers';
 
-type ParaFunction = (a: Array<String>) => void;
+type ParaFunction = (a: Array<string>) => void;
 type UseStepperReturn = {
   steps: RootState['stepper']['steps'];
   currentStep: RootState['stepper']['currentStep'];
@@ -15,7 +15,7 @@ type UseStepperReturn = {
 /**
  * An example for a custom hook that wraps a redux state selectors
  * and actions and provides a summary of the store usage
- * @returns steps: array of String, currentStep: number, increment: VoidFunction, decrement: VoidFunction, setSteps: VoidFunction
+ * @returns steps: array of string, currentStep: number, increment: VoidFunction, decrement: VoidFunction, setSteps: VoidFunction
  */
 const useStepper = (): UseStepperReturn => {
   const dispatch = useAppDispatch();
@@ -31,7 +31,7 @@ const useStepper = (): UseStepperReturn => {
   }, [dispatch]);
 
   const setSteps: ParaFunction = React.useCallback(
-    (newSteps: Array<String>) => {
+    (newSteps: Array<string>) => {
       dispatch(Action.setSteps(newSteps));
     },
     [dispatch],

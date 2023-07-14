@@ -2,8 +2,7 @@ import { useStepper } from 'hooks';
 import Button from 'components/Button';
 import styled from 'styled-components';
 import InputField from 'components/InputField/InputField';
-import { Form, ConfigProvider, Input, FormInstance } from 'antd';
-import { increment } from 'store/reducers/counter.reducer';
+import { Form, ConfigProvider } from 'antd';
 
 function numberWithCommas(x: number) {
   let s = x.toString();

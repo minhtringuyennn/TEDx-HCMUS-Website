@@ -1,16 +1,15 @@
-import * as React from 'react';
 import {
   createBrowserRouter,
   Navigate,
   RouteObject,
-  useRoutes,
   RouterProvider,
-  Outlet,
 } from 'react-router-dom';
-import Screen from 'screens';
-import Path, { AppPath, AuthPath } from 'routes/paths';
-import Layout from 'components/Layout';
-import { absolutePath, join } from 'utils/path.utils';
+
+import Screen from '../screens';
+import Layout from '../components/Layout';
+import { absolutePath } from '../utils/path.utils';
+
+import Path from './paths';
 
 const routes: RouteObject[] = [
   {
@@ -28,6 +27,10 @@ const routes: RouteObject[] = [
       {
         path: Path.Purchase,
         element: <Screen.PurchaseTicket />,
+      },
+      {
+        path: Path.Admin,
+        element: <Screen.Admin />,
       },
       {
         path: absolutePath(Path.ALL),
