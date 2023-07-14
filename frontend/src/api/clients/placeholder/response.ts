@@ -1,10 +1,14 @@
-// Declare your server responses here
-type Post = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+type Ticket = {
+  seatIds: string[];
+  name: string;
+  email: string;
+  phone: string;
+  transactionId: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
 };
 
-export type { Post };
+export type { Ticket };
 export default null;

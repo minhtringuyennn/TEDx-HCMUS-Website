@@ -4,14 +4,12 @@ import * as Params from 'api/clients/placeholder/params';
 import * as Transform from 'api/clients/placeholder/transform';
 import { HTTPMethod } from 'api/types';
 
-// Declare your API calls here...
-const PostsAPI = {
-  getPosts: (params?: Params.GetPosts) =>
-    apiClient<Response.Post[]>({
-      url: '/posts',
+export const TicketAPI = {
+  getTicket: (params: Params.GetTicket) =>
+    apiClient<Response.Ticket>({
+      url: `/ticket/${params.transactionId}`,
       method: HTTPMethod.GET,
-      params,
-    }).then(Transform.postResponse),
+    }).then(Transform.ticketResponse),
 };
 
-export default PostsAPI;
+export const UserAPI = {};

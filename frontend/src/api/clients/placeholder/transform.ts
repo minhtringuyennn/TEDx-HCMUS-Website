@@ -1,5 +1,5 @@
 import * as Response from 'api/clients/placeholder/response';
 
-export const postResponse = (posts: Response.Post[]) => posts;
+export const ticketResponse = (ticket: Response.Ticket) => ticket;
 
-export default { postResponse };
+export default { ticketResponse };

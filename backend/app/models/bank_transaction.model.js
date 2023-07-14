@@ -21,5 +21,31 @@ module.exports = (mongoose) => {
   });
 
   const BankTransaction = mongoose.model("bank_transaction", schema);
+
+  BankTransaction.findById("bank_transaction").then((data) => {
+    if (!data) {
+      const bankTransaction = new BankTransaction({
+        _id: "bank_transaction",
+        description: "",
+        bookingDate: new Date(),
+        transactionAmountCurrency: {
+          amount: 0,
+          currencyCode: "",
+        },
+        runningBalance: 0,
+        category: "",
+      });
+
+      bankTransaction
+        .save(bankTransaction)
+        .then((data) => {
+          console.log(`Bank Transaction was created successfully!`);
+        })
+        .catch((err) => {
+          console.log(`Bank Transaction was created failed!`, err);
+        });
+    }
+  });
+
   return BankTransaction;
 };

@@ -2,6 +2,9 @@ require("dotenv").config();
 
 const express = require("express");
 const cron = require("node-cron");
+const cors = require("cors");
+const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
 
 const db = require("./app/models");
 const { TRIGGER_REFRESH_TIME, TRIGGER_CRON_JOB } = require("./app/common/constants.js");
@@ -9,11 +12,15 @@ const { setCredentialIntoDB, refreshCredential } = require("./app/common/helpers
 
 const app = express();
 
+app.use(cors());
+
 // parse requests of content-type - application/json
 app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+const System = db.system;
 
 const BankCredential = db.bank_credential;
 
@@ -38,6 +45,8 @@ app.get("/ping", (req, res) => {
 });
 
 require("./app/routes/bank.routes")(app);
+require("./app/routes/ticket.routes")(app);
+require("./app/routes/system.routes")(app);
 
 // list all available routes
 function print(path, layer) {
@@ -67,12 +76,39 @@ function split(thing) {
 
 app._router.stack.forEach(print.bind(null, []));
 
+const generateAPIKey = async () => {
+  const key = uuidv4().replace(/-/g, "");
+  console.log("SESSION API KEY IS: ", key);
+
+  const salt = await bcrypt.genSalt(10);
+  const encryptedKey = await bcrypt.hash(key, salt);
+  return { encryptedKey };
+};
+
+generateAPIKey().then((data) => {
+  const { encryptedKey } = data;
+  System.findOneAndUpdate({}, { sessionApiKey: encryptedKey }, { new: true, useFindAndModify: false })
+    .then((data) => {
+      console.log("Updated api_key: ", data);
+    })
+    .catch((err) => {
+      console.log("Error when updating api_key: ", err);
+    });
+});
+
 // Refresh token every 30 seconds
 cron.schedule(TRIGGER_CRON_JOB, async () => {
   try {
     console.log("Running cron job to refresh token...");
 
     const current_time = Date.now();
+
+    const system = await System.findOne();
+    const { bankVerifyStatus } = system;
+    if (!bankVerifyStatus) {
+      console.error("Bank Verify Status is down! Skip refreshing token...");
+      return;
+    }
 
     const latestRecord = await BankCredential.findOne().sort({ _id: -1 });
     const { refresh_token, expire_time } = latestRecord;
