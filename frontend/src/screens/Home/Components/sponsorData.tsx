@@ -32,17 +32,6 @@ const Data = [
     ],
   },
   {
-    type: 'Nhà tài trợ địa điểm',
-    size: 1,
-    list: [
-      {
-        name: 'MPlex',
-        type: 'Nhà tài trợ địa điểm',
-        src: MPlex,
-      },
-    ],
-  },
-  {
     type: 'Nhà tài trợ vàng',
     size: 0.9,
     list: [

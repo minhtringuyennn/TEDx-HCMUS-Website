@@ -40,6 +40,7 @@ const Styled = styled.div`
   .hero-img {
     object-fit: contain;
     height: 100%;
+    width: 100%;
   }
   .container {
     display: inline-flex;
@@ -92,7 +93,7 @@ const Styled = styled.div`
   }
   @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .hero-img {
-      width: 100%;
+      width: 90%;
       height: auto;
     }
   }

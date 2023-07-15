@@ -48,8 +48,8 @@ export const scrollbar = css`
     background-color: rgba(166, 185, 200, 1);
   }
   &:hover::-webkit-scrollbar {
-    width: ${scrollBarWidth};
-    height: ${scrollBarWidth};
+    width: 0;
+    height: 0;
   }
   @media (max-width: 527px) {
     &:hover::-webkit-scrollbar {

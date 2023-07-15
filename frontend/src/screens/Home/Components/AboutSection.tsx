@@ -13,26 +13,26 @@ const About = () => (
           <Title>About</Title>
           <div>
             <p>
-              <span>TEDx HCMUS</span> is a pioneer connecting with TED to
-              organize activities at the University of Science, and is
-              officially licensed by TED. In the first years, TEDx HCMUS may
-              have diversified and organization board members from different
-              fields.{' '}
+              <span>TEDx HCMUS</span> là tổ chức tiên phong trong kết nối với
+              TED để tổ chức các hoạt động tại Trường Đại học Khoa học Tự nhiên,
+              và được cấp phép chính thức bởi TED. Trong những năm đầu tiên,
+              TEDx HCMUS may mắn có được sự đa dạng văn hoá bởi các thành viên
+              BTC đến từ các trường khác nhau{' '}
             </p>
             <p>
-              With the message <span>The Generation Transformation</span> (the
-              transformation of the generation), <span>TEDx HCMUS</span> was
-              officially established on April 24th 2021 to be allowed to drive
-              unique events according to the shape of the memory prescribed by
-              TED to spread the good value –{' '}
-              <span>“ideas worth spreading”</span> to the student community in
-              University of Science, Vietnam National University – HCM in
-              particular and in Ho Chi Minh City in general.{' '}
+              Với thông điệp <span>The Generation Transformation</span> (sự
+              chuyển biến của thế hệ), <span>TEDx HCMUS</span> đã được chính
+              thức thành lập vào ngày 24 tháng 04 năm 2021 được phép tổ chức các
+              sự kiện độc lập theo hình thức được quy định bởi TED nhằm lan tỏa
+              những giá trị tốt đẹp– <span>“ideas worth spreading”</span> đến
+              cộng đồng sinh viên tại Trường đại học Khoa học Tự nhiên, ĐHQG-HCM
+              nói riêng và trên địa bàn thành phố Hồ Chí Minh nói chung{' '}
             </p>
             <p>
-              <span>TEDx HCMUS</span> was born with a mission to build a space
-              for students to exchange academics, connect communities, share
-              their thoughts through talk shows - a picture of speeches.
+              <span>TEDx HCMUS</span> ra đời với sứ mệnh xây dựng cho sinh viên
+              một không gian trao đổi học thuật, kết nối cộng đồng, chia sẻ…
+              được truyền tải thông qua các talk show - một hình thức diễn
+              thuyết
             </p>
           </div>
           <div className="quote hidden-downlg">ideas worth spreading</div>
@@ -52,6 +52,8 @@ const Styled = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
+      gap: 2rem;
     }
   }
   p {

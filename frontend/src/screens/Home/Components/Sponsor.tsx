@@ -59,9 +59,9 @@ const Styled = styled.div`
   gap: 32px 48px;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 32px;
   @media screen and (max-width: ${({ theme }) => theme.size.lg}) {
     gap: 16px 32px;
-    margin-top: 32px;
   }
   @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     gap: 16px;
