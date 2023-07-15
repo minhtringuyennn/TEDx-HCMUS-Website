@@ -12,4 +12,11 @@ export default {
       url: `${route}/${params.transactionId}`,
       method: HTTPMethod.GET,
     }).then(Transform.ticketResponse),
+
+  updateTicketStatus: (params: Params.UpdateTicketStatus) =>
+    apiClient<Response.Ticket>({
+      url: `${route}/${params.transactionId}`,
+      method: HTTPMethod.PATCH,
+      data: { status: params.status },
+    }).then(Transform.ticketResponse),
 };

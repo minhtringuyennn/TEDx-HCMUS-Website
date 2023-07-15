@@ -5,9 +5,11 @@ const cron = require("node-cron");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
+const { spawn } = require("child_process");
 
+const { DB_NAME } = require("./app/config/db.config.js");
 const db = require("./app/models");
-const { TRIGGER_REFRESH_TIME, TRIGGER_CRON_JOB, DB_KEY } = require("./app/common/constants.js");
+const { TRIGGER_REFRESH_TIME, TRIGGER_CRON_JOB, DB_KEY, TRIGGER_BACKUP_DB } = require("./app/common/constants.js");
 const { setCredentialIntoDB, refreshCredential } = require("./app/common/helpers.js");
 
 const app = express();
@@ -77,7 +79,8 @@ function split(thing) {
 app._router.stack.forEach(print.bind(null, []));
 
 const generateAPIKey = async () => {
-  const key = uuidv4().replace(/-/g, "");
+  // const key = uuidv4().replace(/-/g, "");
+  const key = "TEDXHCMUS_TICKET_SYSTEM_150723";
   console.log("SESSION API KEY IS: ", key);
 
   const salt = await bcrypt.genSalt(10);
@@ -89,10 +92,10 @@ generateAPIKey().then((data) => {
   const { encryptedKey } = data;
   System.findOneAndUpdate({}, { sessionApiKey: encryptedKey }, { new: true, useFindAndModify: false })
     .then((data) => {
-      console.log("Updated api_key: ", data);
+      console.log("API_KEY updated");
     })
     .catch((err) => {
-      console.log("Error when updating api_key: ", err);
+      console.error("Error when updating api_key: ", err);
     });
 });
 
@@ -110,7 +113,7 @@ cron.schedule(TRIGGER_CRON_JOB, async () => {
     const bookedSeats = seats.filter((seat) => seat.seatStatus === "booked");
     const reservedSeats = seats.filter((seat) => seat.seatStatus === "reserved");
 
-    // update system
+    // Update system
     System.findOneAndUpdate(
       { _id: DB_KEY.SYSTEM },
       {
@@ -120,11 +123,61 @@ cron.schedule(TRIGGER_CRON_JOB, async () => {
       },
       { new: true, useFindAndModify: false }
     )
-      .then((data) => {
-        console.log("Updated system: ", data);
+      .then(() => {
+        console.log("System updated");
       })
       .catch((err) => {
-        console.log("Error when updating system: ", err);
+        console.error("Error when updating system: ", err);
+      });
+
+    System.findOne({
+      _id: DB_KEY.SYSTEM,
+    })
+      .then((data) => {
+        if (data.lastDBBackup < Date.now() - TRIGGER_BACKUP_DB) {
+          console.log("Backup database");
+
+          // Backup database
+          const BACKUP_PATH = `./db/backup/${Date.now()}`;
+
+          const backupProcess = spawn(
+            "mongodump",
+            [`--uri=${db.url}`, `--db=${DB_NAME}`, `--archive=${BACKUP_PATH}`, "--gzip"],
+            {
+              shell: true,
+            }
+          );
+
+          console.log("Backup process started...", backupProcess.pid, backupProcess.spawnargs);
+
+          backupProcess.stderr.on("data", (data) => {
+            console.log(`Backup process: ${data}`);
+          });
+
+          backupProcess.on("exit", (code, signal) => {
+            if (code) console.log("Backup process exited with code ", code);
+            else if (signal) console.error("Backup process was killed with singal ", signal);
+            else {
+              console.log(`Successfully backedup the database at ${BACKUP_PATH}`);
+              System.findOneAndUpdate(
+                { _id: DB_KEY.SYSTEM },
+                {
+                  lastDBBackup: Date.now(),
+                },
+                { new: true, useFindAndModify: false }
+              )
+                .then(() => {
+                  console.log("System updated");
+                })
+                .catch((err) => {
+                  console.error("Error when updating system: ", err);
+                });
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error when getting lastDBBackup: ", err);
       });
 
     const { bankVerifyStatus } = system;
@@ -146,7 +199,7 @@ cron.schedule(TRIGGER_CRON_JOB, async () => {
           console.log("Updated credential: ", data);
         })
         .catch((err) => {
-          console.log("Error when updating credential: ", err);
+          console.error("Error when updating credential: ", err);
         });
     }
   } catch (error) {

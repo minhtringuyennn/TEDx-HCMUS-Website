@@ -65,6 +65,10 @@ const TrackTicket = () => {
                 <img
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${data.transactionId}`}
                   alt="QR Code"
+                  style={{
+                    width: '500px',
+                    height: '500px',
+                  }}
                 />
               </div>
             </div>

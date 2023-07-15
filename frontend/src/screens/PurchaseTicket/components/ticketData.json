@@ -1,6 +1,14 @@
 [
   {
-    "title": "Vé Early bird",
+    "title": "Phân hạng ghế",
+    "types": [
+      { "title": "Ghế hạng 1", "price": 269000 },
+      { "title": "Ghế hạng 2", "price": 500000 },
+      { "title": "Ghế hạng 3", "price": 900000 }
+    ]
+  },
+  {
+    "title": "Vé nhóm",
     "types": [
       { "title": "Ghế đơn (x1 ghế)", "price": 269000 },
       { "title": "Ghế đôi (x2 ghế)", "price": 500000 },

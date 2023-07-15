@@ -47,6 +47,7 @@ const StepTicket = () => {
       </div>
       <div className="grid-right">
         <h2>Sơ đồ chỗ ngồi</h2>
+        
       </div>
     </StepBody>
   );

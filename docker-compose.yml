@@ -30,6 +30,7 @@ services:
     volumes:
       - ./backend:/backend
       - /backend/node_modules
+      - ./db/backup:/backend/db/backup
 
 volumes:
   db:

@@ -26,8 +26,10 @@ exports.updateSystemField = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid or blank key or value!" });
     }
 
-    if (key === "sessionApiKey") {
-      return res.status(400).json({ success: false, message: "Cannot update sessionApiKey!" });
+    const RESTRICTED_KEYS = ["_id", "__v", "sessionApiKey", "availableSeats", "bookedSeats", "reservedSeats"];
+
+    if (RESTRICTED_KEYS.includes(key)) {
+      return res.status(400).json({ success: false, message: `Cannot update ${key}!` });
     }
 
     const collectionKeys = Object.keys(System.schema.paths);

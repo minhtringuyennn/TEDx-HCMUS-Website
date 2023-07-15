@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import {
   DesktopOutlined,
-  FileOutlined,
   PieChartOutlined,
-  TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -11,6 +9,7 @@ import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
 import Overview from './pages/Overview';
 import System from './pages/System';
+import Checkin from './pages/Checkin';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -33,11 +32,13 @@ function getItem(
 const items: MenuItem[] = [
   getItem('System', '1', <DesktopOutlined />),
   getItem('Overview', '2', <PieChartOutlined />),
+  getItem('Checkin', '3', <UserOutlined />),
 ];
 
 const pages: Record<string, React.ReactNode> = {
   '1': <System />,
   '2': <Overview />,
+  '3': <Checkin/>,
 };
 
 const Admin: React.FC = () => {
@@ -62,7 +63,12 @@ const Admin: React.FC = () => {
       </Sider>
       <Layout>
         <div
-          style={{ padding: 24, background: '#f1f1f1', display: 'flex', flex: 1 }}
+          style={{
+            padding: 24,
+            background: '#f1f1f1',
+            display: 'flex',
+            flex: 1,
+          }}
         >
           {pages[selectedKey]}
         </div>

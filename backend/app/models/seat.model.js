@@ -1,4 +1,4 @@
-const { INIT_SEAT } = require("./seat.init");
+const { INIT_SEAT } = require("./seat.mplex.init.js");
 const { SEAT_STATUS, SEAT_TYPE } = require("../common/constants");
 
 module.exports = (mongoose) => {
@@ -21,17 +21,15 @@ module.exports = (mongoose) => {
 
   const Seat = mongoose.model("seat", schema);
 
-  console.log("INIT_SEAT", INIT_SEAT);
-
   INIT_SEAT.forEach((row) => {
-    row.forEach((seatId) => {
+    row.forEach(({ seatId, price }) => {
       Seat.findById(seatId).then((data) => {
         if (!data) {
           const seat = new Seat({
             _id: seatId,
             seatId,
-            seatType: SEAT_TYPE.DEFAULT.key,
-            seatPrice: SEAT_TYPE.DEFAULT.price,
+            seatType: SEAT_TYPE.STANDARD.key,
+            seatPrice: SEAT_TYPE.STANDARD.price,
             seatStatus: SEAT_STATUS.AVAILABLE,
           });
 
@@ -41,7 +39,7 @@ module.exports = (mongoose) => {
               console.log(`Seat ${seatId} was created successfully!`);
             })
             .catch((err) => {
-              console.log(`Seat ${seatId} was created failed!`, err);
+              console.error(`Seat ${seatId} was created failed!`, err);
             });
         }
       });
