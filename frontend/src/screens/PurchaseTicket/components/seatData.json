@@ -1,0 +1,29 @@
+{
+  "seat_typeA": {
+    "reserved": [
+      [0, 4],
+      [1, 5],
+      [1, 6]
+    ],
+    "row": 5,
+    "total": 30
+  },
+  "seat_typeB": {
+    "reserved": [
+      [0, 4],
+      [1, 5],
+      [1, 6]
+    ],
+    "row": 6,
+    "total": 30
+  },
+  "seat_typeC": {
+    "reserved": [
+      [0, 4],
+      [1, 5],
+      [1, 6]
+    ],
+    "row": 6,
+    "total": 30
+  }
+}

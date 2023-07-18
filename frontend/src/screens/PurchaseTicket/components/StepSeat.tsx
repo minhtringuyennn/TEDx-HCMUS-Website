@@ -2,6 +2,7 @@ import { useStepper } from 'hooks';
 import Button from 'components/Button';
 import styled from 'styled-components';
 import TicketData from './ticketData.json';
+import CinemaSeats from './CinemaSeats';
 
 function numberWithCommas(x: number) {
   let s = x.toString();
@@ -46,8 +47,8 @@ const StepTicket = () => {
         </ButtonGroup>
       </div>
       <div className="grid-right">
-        <h2>Sơ đồ chỗ ngồi</h2>
-        
+        <h3>Sơ đồ chỗ ngồi</h3>
+        <CinemaSeats />
       </div>
     </StepBody>
   );
@@ -65,6 +66,9 @@ const StepBody = styled.div`
     align-items: flex-start;
     gap: 20px;
     grid-column: 2/6;
+    @media (max-width: ${({ theme }) => theme.size.md}) {
+      grid-column: 1/7;
+    }
   }
   .grid-right {
     display: flex;
@@ -72,22 +76,17 @@ const StepBody = styled.div`
     align-items: flex-start;
     gap: 20px;
     grid-column: 8/13;
+    @media (max-width: ${({ theme }) => theme.size.md}) {
+      grid-column: 7/13;
+    }
   }
   @media (max-width: ${({ theme }) => theme.size.md}) {
-    .grid-left {
-      grid-column: 1/7;
-    }
-    .grid-right {
-      grid-column: 8/13;
-    }
+    gap: 16px;
   }
   @media (max-width: ${({ theme }) => theme.size.sm}) {
     display: flex;
     flex-direction: column-reverse;
     gap: 40px;
-    .grid-left {
-      gap: 8px;
-    }
   }
 `;
 
