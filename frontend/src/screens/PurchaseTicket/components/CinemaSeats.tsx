@@ -10,9 +10,9 @@ function generateMap(
   reserved.forEach((seat) => {
     map[seat[0]][seat[1]] = 'X';
   });
-
   return map;
 }
+
 const CinemaSeats = () => {
   const numColumn = 16;
   return (
@@ -31,6 +31,7 @@ const CinemaSeats = () => {
                   })}
                 </div>
               ))}
+              <div className="map-text">{key.slice(-1)}</div>
             </div>
           );
         })}
@@ -70,21 +71,33 @@ const Styled = styled.div`
       flex-direction: row;
       gap: 4px;
       @media (max-width: ${({ theme }) => theme.size.sm}) {
-        gap: 2px;
+        gap: 1px;
       }
     }
     .zone {
       display: flex;
       flex-direction: column;
       gap: 4px;
+      over-flow: hidden;
       align-items: center;
       justify-content: center;
       background: rgba(255, 43, 6, 0.3);
       &:hover {
         background: rgba(163, 24, 0, 0.8);
+        .map-text {
+          opacity: 1;
+        }
       }
       @media (max-width: ${({ theme }) => theme.size.sm}) {
-        gap: 2px;
+        gap: 1px;
+      }
+      .map-text {
+        opacity: 0;
+        position: absolute;
+        height: auto;
+        width: auto;
+        font-weight: bold;
+        font-size: 3rem;
       }
     }
   }
@@ -96,7 +109,7 @@ const Styled = styled.div`
     width: 100%;
   }
   .reserved {
-    background: #b07979;
+    background: #8f5252;
     border: none;
     color: #650f00;
     font-size: 12px;
@@ -111,7 +124,7 @@ const Seat = styled.div`
   width: 20px;
   box-sizing: border-box;
   border-radius: 2px;
-  border: 1px solid #b07979;
+  border: 1px solid #8f5252;
   @media (max-width: ${({ theme }) => theme.size.md}) {
     height: 16px;
     width: 16px;
