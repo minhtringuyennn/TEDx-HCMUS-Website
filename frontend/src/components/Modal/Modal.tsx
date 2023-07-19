@@ -38,6 +38,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 };
 
 const CustomModal = styled.div`
+  z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;

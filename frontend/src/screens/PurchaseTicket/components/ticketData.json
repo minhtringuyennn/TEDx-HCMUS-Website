@@ -1,17 +1,25 @@
 [
   {
-    "title": "Phân hạng ghế",
+    "title": "Ghế hạng A",
     "types": [
-      { "title": "Ghế hạng 1", "price": 269000 },
-      { "title": "Ghế hạng 2", "price": 500000 },
-      { "title": "Ghế hạng 3", "price": 900000 }
+      { "title": "Ghế đơn (x1 ghế)", "price": 300000 },
+      { "title": "Ghế đôi (x2 ghế)", "price": 560000 },
+      { "title": "Ghế nhóm (x4 ghế)", "price": 1100000 }
     ]
   },
   {
-    "title": "Vé nhóm",
+    "title": "Ghế hạng B",
     "types": [
-      { "title": "Ghế đơn (x1 ghế)", "price": 269000 },
-      { "title": "Ghế đôi (x2 ghế)", "price": 500000 },
+      { "title": "Ghế đơn (x1 ghế)", "price": 290000 },
+      { "title": "Ghế đôi (x2 ghế)", "price": 520000 },
+      { "title": "Ghế nhóm (x4 ghế)", "price": 1000000 }
+    ]
+  },
+  {
+    "title": "Ghế hạng C",
+    "types": [
+      { "title": "Ghế đơn (x1 ghế)", "price": 260000 },
+      { "title": "Ghế đôi (x2 ghế)", "price": 490000 },
       { "title": "Ghế nhóm (x4 ghế)", "price": 900000 }
     ]
   }
