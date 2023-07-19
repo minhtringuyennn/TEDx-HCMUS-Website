@@ -4,15 +4,21 @@ import React, { ButtonHTMLAttributes, HTMLProps } from 'react';
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   typeFill?: string;
   children: React.ReactNode;
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
   typeFill,
   children,
+  className,
   ...props
 }: ButtonProps) => (
   <Styled>
-    <button className={`${typeFill}-btn`} {...props} type="button">
+    <button
+      className={[`${typeFill}-btn`, className].join(' ')}
+      {...props}
+      type="button"
+    >
       {children}
     </button>
   </Styled>

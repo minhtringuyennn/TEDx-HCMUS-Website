@@ -39,11 +39,11 @@ const QuantityGroup = () => {
   const decrease = () => setQuanState(quan === 0 ? 0 : quan - 1);
   return (
     <Quantity>
-      <Button typeFill="text" onClick={decrease} className="quantity-btn">
+      <Button typeFill="outlined" onClick={decrease} className="quantity-btn">
         -
       </Button>
       <div className="quantity-number">{quan}</div>
-      <Button typeFill="text" onClick={increase} className="quantity-btn">
+      <Button typeFill="outlined" onClick={increase} className="quantity-btn">
         +
       </Button>
     </Quantity>
@@ -190,5 +190,6 @@ const Quantity = styled.div`
     height: 24px;
     width: 24px;
     padding: 0px;
+    border: 1px solid ${({ theme }) => theme.colors.gray};
   }
 `;
