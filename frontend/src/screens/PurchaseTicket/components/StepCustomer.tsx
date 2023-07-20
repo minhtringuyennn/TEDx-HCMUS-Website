@@ -1,63 +1,131 @@
+import { useState, useMemo } from 'react';
 import { useStepper } from 'hooks';
 import Button from 'components/Button';
 import styled from 'styled-components';
 import InputField from 'components/InputField/InputField';
 import { Form, ConfigProvider } from 'antd';
+import _ from 'lodash';
+import { z } from 'zod';
 
-function numberWithCommas(x: number) {
-  let s = x.toString();
-  const pattern = /(-?\d+)(\d{3})/;
-  while (pattern.test(s)) s = s.replace(pattern, '$1.$2');
-  return s;
-}
+const FormSchema = z.object({
+  FullName: z.string().min(2),
+  Email: z.string().email(),
+  Phone: z.string().min(10),
+  Coupon: z.string().optional(),
+});
 
-const CustomerInfo = () => {
+const StepInfo = () => {
+  const { increment, decrement } = useStepper();
+  const [formValues, setFormValues] = useState({
+    FullName: '',
+    Email: '',
+    Phone: '',
+    Coupon: '',
+  });
   const form = Form.useFormInstance();
-  const onFinish = (values: any) => {
-    console.log(values);
-    form.setFieldsValue(values);
-  };
+
+  const { FullName, Email, Phone } = formValues;
+
+  const isValid = useMemo(() => {
+    if (FullName && Email && Phone) {
+      return FormSchema.safeParse(formValues);
+    }
+    return false;
+  }, [FullName, Email, Phone, formValues]);
+
   return (
-    <InfoSection>
-      <h3>Thông tin người đặt</h3>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorText: '#fff',
-            fontFamily: 'Be Vietnam Pro',
-            paddingXS: 4,
-          },
-        }}
-      >
-        <Form
-          layout="vertical"
-          style={{ width: '100%', color: '#fff' }}
-          onFinish={onFinish}
-          form={form}
-          name="ticketCustomerForm"
-        >
-          <Form.Item label="Họ và tên" name="FullName" className="form-item">
-            <InputField placeholder="Nhập họ và tên" className="form-item" />
-          </Form.Item>
-          <Form.Item label="Email" name="Email" className="form-item">
-            <InputField placeholder="Nhập email" className="form-item" />
-          </Form.Item>
-          <Form.Item label="Số điện thoại" name="Phone" className="form-item">
-            <InputField
-              placeholder="Nhập số điện thoại"
-              className="form-item"
-            />
-          </Form.Item>
-        </Form>
-      </ConfigProvider>
-    </InfoSection>
+    <StepBody>
+      <div className="grid-item">
+        <InfoSection>
+          <h3>Thông tin người đặt</h3>
+          <ConfigProvider
+            theme={{
+              token: {
+                colorText: '#fff',
+                fontFamily: 'Be Vietnam Pro',
+                paddingXS: 4,
+              },
+            }}
+          >
+            <Form
+              layout="vertical"
+              style={{ width: '100%', color: '#fff' }}
+              onValuesChange={(_, values) => {
+                if (values) {
+                  setFormValues((prev) => ({ ...prev, ...values }));
+                }
+              }}
+              form={form}
+              name="ticketCustomerForm"
+            >
+              <Form.Item
+                label="Họ và tên"
+                name="FullName"
+                className="form-item"
+                required
+              >
+                <InputField
+                  placeholder="Nhập họ và tên"
+                  className="form-item"
+                />
+              </Form.Item>
+              <Form.Item
+                label="Email"
+                name="Email"
+                className="form-item"
+                required
+              >
+                <InputField placeholder="Nhập email" className="form-item" />
+              </Form.Item>
+              <Form.Item
+                label="Số điện thoại"
+                name="Phone"
+                className="form-item"
+                required
+              >
+                <InputField
+                  placeholder="Nhập số điện thoại"
+                  className="form-item"
+                />
+              </Form.Item>
+              <Form.Item
+                label="Mã giảm giá"
+                name="Coupon"
+                className="form-item"
+              >
+                <InputField
+                  placeholder="Nhập mã giảm giá"
+                  className="form-item"
+                />
+              </Form.Item>
+            </Form>
+          </ConfigProvider>
+          {!isValid && (
+            <div style={{ color: 'red' }}>
+              * Vui lòng điền đầy đủ và chính xác thông tin
+            </div>
+          )}
+        </InfoSection>
+        <BookingInfo />
+        <ButtonGroup>
+          <Button typeFill="text" onClick={decrement}>
+            Trở về
+          </Button>
+          <Button onClick={increment} type="submit" disabled={!isValid}>
+            Tiếp theo
+          </Button>
+        </ButtonGroup>
+      </div>
+    </StepBody>
   );
 };
+
+export default StepInfo;
 
 const BookingInfo = () => {
   const booking = [
     {
-      title: 'Ghế hạng A',
+      title: 'Ghế hạng Premium',
       single: 300000,
       number: 1,
     },
@@ -74,7 +142,7 @@ const BookingInfo = () => {
       {booking.map((item) => {
         total += item.single * item.number;
         return (
-          <div className="booking-des">
+          <div className="booking-des" key={item.title}>
             <div className="booking-item">
               <div>{item.number}</div>
               <div className="booking-item-title">
@@ -96,32 +164,13 @@ const BookingInfo = () => {
     </InfoSection>
   );
 };
-const SubmitStep = () => {
-  const { increment, decrement } = useStepper();
-  return <Button type="submit">Submit sub form</Button>;
-};
-const StepInfo = () => {
-  const { increment, decrement } = useStepper();
 
-  return (
-    <StepBody>
-      <div className="grid-item">
-        <CustomerInfo />
-        <BookingInfo />
-        <ButtonGroup>
-          <Button typeFill="text" onClick={decrement}>
-            Trở về
-          </Button>
-          <Button onClick={increment} type="submit">
-            Tiếp theo
-          </Button>
-        </ButtonGroup>
-      </div>
-    </StepBody>
-  );
-};
-
-export default StepInfo;
+function numberWithCommas(x: number) {
+  let s = x.toString();
+  const pattern = /(-?\d+)(\d{3})/;
+  while (pattern.test(s)) s = s.replace(pattern, '$1.$2');
+  return s;
+}
 
 const StepBody = styled.div`
   display: grid;

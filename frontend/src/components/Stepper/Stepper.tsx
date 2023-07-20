@@ -15,6 +15,7 @@ const Stepper = ({ children }: StepperProps) => {
           ? steps.map((step, index) => (
               <StyledStepperHeaderItem
                 className={currentStep >= index ? 'completed' : ''}
+                key={step}
               >
                 <div className="step-info">
                   <div

@@ -12,6 +12,6 @@ RUN apt install ./mongodb-database-tools-*.deb
 WORKDIR /backend
 COPY package.json .
 RUN rm -rf node_modules
-RUN yarn
+RUN yarn install --frozen-lockfile
 COPY . .
 CMD yarn dev

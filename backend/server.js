@@ -108,28 +108,6 @@ cron.schedule(TRIGGER_CRON_JOB, async () => {
 
     const system = await System.findOne();
 
-    const seats = await Seat.find();
-    const availableSeats = seats.filter((seat) => seat.seatStatus === "available");
-    const bookedSeats = seats.filter((seat) => seat.seatStatus === "booked");
-    const reservedSeats = seats.filter((seat) => seat.seatStatus === "reserved");
-
-    // Update system
-    System.findOneAndUpdate(
-      { _id: DB_KEY.SYSTEM },
-      {
-        availableSeats: availableSeats,
-        bookedSeats: bookedSeats,
-        reservedSeats: reservedSeats,
-      },
-      { new: true, useFindAndModify: false }
-    )
-      .then(() => {
-        console.log("System updated");
-      })
-      .catch((err) => {
-        console.error("Error when updating system: ", err);
-      });
-
     System.findOne({
       _id: DB_KEY.SYSTEM,
     })

@@ -2,9 +2,6 @@ module.exports = (mongoose) => {
   var schema = mongoose.Schema(
     {
       _id: String,
-      availableSeats: Array,
-      bookedSeats: Array,
-      reservedSeats: Array,
       bankVerifyStatus: Boolean,
       bankAccount: String,
       bankAccountName: String,
@@ -26,9 +23,6 @@ module.exports = (mongoose) => {
     if (!data) {
       const system = new System({
         _id: "server_system",
-        availableSeats: [],
-        bookedSeats: [],
-        reservedSeats: [],
         bankVerifyStatus: false,
         bankAccount: "",
         bankAccountName: "",
@@ -38,7 +32,7 @@ module.exports = (mongoose) => {
 
       system
         .save(system)
-        .then((data) => {
+        .then(() => {
           console.log(`System was created successfully!`);
         })
         .catch((err) => {

@@ -1,14 +1,5 @@
 {
-  "seat_typeA": {
-    "reserved": [
-      [0, 4],
-      [1, 5],
-      [1, 6]
-    ],
-    "row": 5,
-    "total": 30
-  },
-  "seat_typeB": {
+  "PREMIUM": {
     "reserved": [
       [0, 4],
       [1, 5],
@@ -17,13 +8,22 @@
     "row": 6,
     "total": 30
   },
-  "seat_typeC": {
+  "STANDARD": {
     "reserved": [
       [0, 4],
       [1, 5],
       [1, 6]
     ],
     "row": 6,
+    "total": 30
+  },
+  "ECO": {
+    "reserved": [
+      [0, 4],
+      [1, 5],
+      [1, 6]
+    ],
+    "row": 3,
     "total": 30
   }
 }

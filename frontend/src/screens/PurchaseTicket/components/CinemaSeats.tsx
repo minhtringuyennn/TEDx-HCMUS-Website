@@ -14,7 +14,7 @@ function generateMap(
 }
 
 const CinemaSeats = () => {
-  const numColumn = 16;
+  const numColumn = 15;
   return (
     <Styled>
       <div className="cinema">
@@ -31,16 +31,21 @@ const CinemaSeats = () => {
                   })}
                 </div>
               ))}
-              <div className="map-text">{key.slice(-1)}</div>
+              <div className="map-text">{key}</div>
             </div>
           );
         })}
         <div style={{ display: 'flex' }}>
-          <div className="map-notice">
-            <Seat style={{ background: 'rgba(255, 43, 6, 0.3)' }} />
+          <div className="map-notice" style={{ alignItems: 'center' }}>
+            <Seat
+              style={{
+                background: 'rgba(255, 43, 6, 0.3)',
+                alignItems: 'center',
+              }}
+            />
             <div>Ghế trống</div>
           </div>
-          <div className="map-notice">
+          <div className="map-notice" style={{ alignItems: 'center' }}>
             <Seat style={{ background: '#b07979' }} />
             <div>Đã đặt</div>
           </div>
@@ -53,7 +58,6 @@ const CinemaSeats = () => {
 const Styled = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   width: 100%;
   .stage {
     border: 1px solid #8a8a8a;
@@ -69,7 +73,7 @@ const Styled = styled.div`
     .row {
       display: flex;
       flex-direction: row;
-      gap: 4px;
+      gap: 0.75rem;
       @media (max-width: ${({ theme }) => theme.size.sm}) {
         gap: 1px;
       }
@@ -82,6 +86,8 @@ const Styled = styled.div`
       align-items: center;
       justify-content: center;
       background: rgba(255, 43, 6, 0.3);
+      padding: 1rem;
+      border-radius: 4px;
       &:hover {
         background: rgba(163, 24, 0, 0.8);
         .map-text {
@@ -107,6 +113,7 @@ const Styled = styled.div`
     flex-direction: row;
     gap: 8px;
     width: 100%;
+    justify-content: center;
   }
   .reserved {
     background: #8f5252;
@@ -120,14 +127,14 @@ const Styled = styled.div`
 `;
 const Seat = styled.div`
   display: block;
-  height: 20px;
-  width: 20px;
+  height: 1rem;
+  width: 1rem;
   box-sizing: border-box;
   border-radius: 2px;
   border: 1px solid #8f5252;
   @media (max-width: ${({ theme }) => theme.size.md}) {
-    height: 16px;
-    width: 16px;
+    height: 0.75rem;
+    width: 0.75rem;
   }
 `;
 export default CinemaSeats;

@@ -25,7 +25,7 @@ const TicketPrice = ({ title, types }: PriceProps) => (
   <TicketGroup>
     <div>{title}</div>
     {types.map((type) => (
-      <div className="ticket-type">
+      <div className="ticket-type" key={type.title}>
         <div className="ticket-type-title">{type.title}</div>
         <div className="ticket-type-price">{numberWithCommas(type.price)}</div>
       </div>
@@ -59,21 +59,30 @@ const StepTicket = () => {
       <div className="grid-left">
         <h3>Giá vé</h3>
         {Object.entries(TicketData).map(([title, value]) => (
-          <div className="ticket-opt">
+          <div className="ticket-opt" key={value.title}>
             <div className="ticket-type-title">{value.title}</div>
             <QuantityGroup />
           </div>
         ))}
         <Button typeFill="text" onClick={toggleModal} className="more-info">
-          Xem chi tiết từng mức giá vé
+          <span
+            style={{
+              textDecoration: 'underline',
+            }}
+          >
+            Chi tiết mức giá vé
+          </span>
         </Button>
         <Modal isOpen={isModalOpen} onClose={toggleModal}>
           {Object.entries(TicketData).map(([title, value]) => (
-            <TicketPrice title={value.title} types={value.types} />
+            <TicketPrice
+              title={value.title}
+              types={value.types}
+              key={value.title}
+            />
           ))}
         </Modal>
         <ButtonGroup>
-          <Button disabled>Trở về</Button>
           <Button onClick={increment}>Tiếp theo</Button>
         </ButtonGroup>
       </div>
@@ -91,6 +100,7 @@ const StepBody = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   text-align: center;
+  padding-bottom: 2rem;
   .more-info {
     font-style: italic;
     font-weight: normal;
@@ -120,7 +130,7 @@ const StepBody = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    gap: 1rem;
     grid-column: 8/13;
     @media (max-width: ${({ theme }) => theme.size.md}) {
       grid-column: 7/13;
@@ -132,13 +142,10 @@ const StepBody = styled.div`
     justify-content: space-between;
     width: 100%;
   }
-  @media (max-width: ${({ theme }) => theme.size.md}) {
-    gap: 16px;
-  }
-  @media (max-width: ${({ theme }) => theme.size.sm}) {
+  @media (max-width: ${({ theme }) => theme.size.lg}) {
     display: flex;
     flex-direction: column-reverse;
-    gap: 40px;
+    gap: 2rem;
   }
 `;
 

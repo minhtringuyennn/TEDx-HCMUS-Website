@@ -59,8 +59,8 @@ const StepBilling = () => {
         <BankContainer title="Số tiền" value="TXUS1234567" copy="TXUS1234567" />
         <p className="bank-notice">
           Lưu ý: Vui lòng <span>không chỉnh sửa</span> nội dung chuyển khoản để
-          hệ thống có thể kiểm tra tự động và <span>giữ lại</span> kết quả giao
-          dịch.
+          hệ thống có thể kiểm tra tự động và <span>lưu lại</span> kết quả giao
+          dịch cho đến khi được xác nhận thanh toán.
         </p>
         <ButtonGroup>
           <Button typeFill="text" onClick={decrement}>

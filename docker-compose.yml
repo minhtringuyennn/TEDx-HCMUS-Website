@@ -11,7 +11,7 @@ services:
     ports:
       - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
 
-  app:
+  backend:
     depends_on:
       - mongodb
     build: ./backend
@@ -31,6 +31,15 @@ services:
       - ./backend:/backend
       - /backend/node_modules
       - ./db/backup:/backend/db/backup
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    env_file: ./.env
+    stdin_open: true
+    tty: true
+    ports:
+      - $FE_LOCAL_PORT:$FE_DOCKER_PORT
 
 volumes:
   db:

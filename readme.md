@@ -1,6 +1,6 @@
 # TEDx Ticket System
 
-## Run the Backend System
+## Run the Ticket System
 
 We can easily run the whole with only a single command:
 
@@ -16,7 +16,7 @@ The services can be run on the background with command:
 docker-compose up -d --build
 ```
 
-## Stop the Backend System
+## Stop the Ticket System
 
 Stopping all the running containers is also simple with a single command:
 

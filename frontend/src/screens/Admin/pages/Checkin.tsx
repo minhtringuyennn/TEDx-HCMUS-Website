@@ -94,7 +94,7 @@ const Checkin = () => {
         >
           <QrReader
             constraints={{ facingMode: 'user' }}
-            onResult={(result) => handleScanResult(result?.text)}
+            // onResult={(result) => handleScanResult(result?.text)}
           />
         </div>
       ) : (

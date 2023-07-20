@@ -1,6 +1,6 @@
 [
   {
-    "title": "Ghế hạng A",
+    "title": "Ghế hạng Premium",
     "types": [
       { "title": "Ghế đơn (x1 ghế)", "price": 300000 },
       { "title": "Ghế đôi (x2 ghế)", "price": 560000 },
@@ -8,7 +8,7 @@
     ]
   },
   {
-    "title": "Ghế hạng B",
+    "title": "Ghế hạng Standard",
     "types": [
       { "title": "Ghế đơn (x1 ghế)", "price": 290000 },
       { "title": "Ghế đôi (x2 ghế)", "price": 520000 },
@@ -16,7 +16,7 @@
     ]
   },
   {
-    "title": "Ghế hạng C",
+    "title": "Ghế hạng Eco",
     "types": [
       { "title": "Ghế đơn (x1 ghế)", "price": 260000 },
       { "title": "Ghế đôi (x2 ghế)", "price": 490000 },
