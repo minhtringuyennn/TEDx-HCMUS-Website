@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useStepper } from 'hooks';
 import styled from 'styled-components';
 import Button from 'components/Button';
@@ -33,10 +33,28 @@ const TicketPrice = ({ title, types }: PriceProps) => (
   </TicketGroup>
 );
 
-const QuantityGroup = () => {
-  const [quan, setQuanState] = React.useState(0);
+// Define the prop type for seatKey
+type SeatKeyType = 'premium' | 'standard' | 'eco';
+
+// Define the props interface for the QuantityGroup component
+interface QuantityGroupProps {
+  seatKey: SeatKeyType;
+}
+
+const QuantityGroup: React.FC<QuantityGroupProps> = ({ seatKey }) => {
+  const { seats, setSeats } = useStepper();
+  const [quan, setQuanState] = React.useState(seats[seatKey] || 0);
   const increase = () => setQuanState(quan + 1);
   const decrease = () => setQuanState(quan === 0 ? 0 : quan - 1);
+
+  // Update the seats state when the quantity changes
+  useEffect(() => {
+    setSeats({
+      ...seats,
+      [seatKey]: quan,
+    });
+  }, [quan, seatKey, setSeats]);
+
   return (
     <Quantity>
       <Button typeFill="outlined" onClick={decrease} className="quantity-btn">
@@ -49,6 +67,7 @@ const QuantityGroup = () => {
     </Quantity>
   );
 };
+
 const StepTicket = () => {
   const { increment } = useStepper();
   const [isModalOpen, setModalState] = React.useState(false);
@@ -59,9 +78,9 @@ const StepTicket = () => {
       <div className="grid-left">
         <h3>Giá vé</h3>
         {Object.entries(TicketData).map(([title, value]) => (
-          <div className="ticket-opt" key={value.title}>
+          <div className="ticket-opt" key={value.key}>
             <div className="ticket-type-title">{value.title}</div>
-            <QuantityGroup />
+            <QuantityGroup seatKey={value.key as SeatKeyType} />
           </div>
         ))}
         <Button typeFill="text" onClick={toggleModal} className="more-info">
@@ -70,7 +89,7 @@ const StepTicket = () => {
               textDecoration: 'underline',
             }}
           >
-            Chi tiết mức giá vé
+            Chi tiết quyền lợi và mức giá vé
           </span>
         </Button>
         <Modal isOpen={isModalOpen} onClose={toggleModal}>

@@ -20,18 +20,18 @@ const routes: RouteObject[] = [
         path: Path.Home,
         element: <Screen.Home />,
       },
-      {
-        path: Path.Track,
-        element: <Screen.TrackTicket />,
-      },
+      // {
+      //   path: Path.Track,
+      //   element: <Screen.TrackTicket />,
+      // },
       {
         path: Path.Purchase,
         element: <Screen.PurchaseTicket />,
       },
-      {
-        path: Path.Admin,
-        element: <Screen.Admin />,
-      },
+      // {
+      //   path: Path.Admin,
+      //   element: <Screen.Admin />,
+      // },
       {
         path: absolutePath(Path.ALL),
         element: <Navigate replace to={Path.NotFound} />,

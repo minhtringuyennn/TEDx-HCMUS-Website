@@ -4,13 +4,38 @@ import StepperSelector from 'store/selectors/stepper.selectors';
 import * as Action from 'store/reducers/stepper.reducer';
 import { RootState } from 'store/reducers';
 
-type ParaFunction = (a: Array<string>) => void;
+type ParaFunction = (arg: Array<string>) => void;
+type SeatsFunction = (arg: {
+  premium: number;
+  standard: number;
+  eco: number;
+}) => void;
+type CustomerFunction = (arg: {
+  name: string;
+  email: string;
+  phone: string;
+  coupon: string;
+}) => void;
+
 type UseStepperReturn = {
   steps: RootState['stepper']['steps'];
   currentStep: RootState['stepper']['currentStep'];
+  seats: {
+    premium: number;
+    standard: number;
+    eco: number;
+  };
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    coupon: string;
+  };
   increment: VoidFunction;
   decrement: VoidFunction;
   setSteps: ParaFunction;
+  setSeats: SeatsFunction;
+  setCustomer: CustomerFunction;
 };
 /**
  * An example for a custom hook that wraps a redux state selectors
@@ -21,6 +46,8 @@ const useStepper = (): UseStepperReturn => {
   const dispatch = useAppDispatch();
   const steps = useAppSelector(StepperSelector.steps);
   const currentStep = useAppSelector(StepperSelector.currentStep);
+  const seats = useAppSelector(StepperSelector.seats);
+  const customer = useAppSelector(StepperSelector.customer);
 
   const increment: VoidFunction = React.useCallback(() => {
     dispatch(Action.increment());
@@ -36,7 +63,37 @@ const useStepper = (): UseStepperReturn => {
     },
     [dispatch],
   );
-  return { steps, currentStep, increment, decrement, setSteps };
+
+  const setSeats: SeatsFunction = React.useCallback(
+    (newSeats: { premium: number; standard: number; eco: number }) => {
+      dispatch(Action.setSeats(newSeats));
+    },
+    [dispatch],
+  );
+
+  const setCustomer: CustomerFunction = React.useCallback(
+    (newCustomer: {
+      name: string;
+      email: string;
+      phone: string;
+      coupon: string;
+    }) => {
+      dispatch(Action.setCustomer(newCustomer));
+    },
+    [dispatch],
+  );
+
+  return {
+    steps,
+    currentStep,
+    seats,
+    customer,
+    increment,
+    decrement,
+    setSteps,
+    setSeats,
+    setCustomer,
+  };
 };
 
 export default useStepper;

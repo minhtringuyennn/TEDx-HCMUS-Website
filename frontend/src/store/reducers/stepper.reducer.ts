@@ -3,9 +3,34 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 interface StepperState {
   steps: string[];
   currentStep: number;
+  seats: {
+    premium: number;
+    standard: number;
+    eco: number;
+  };
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    coupon: string;
+  };
 }
 
-const initialState: StepperState = { steps: [], currentStep: 0 };
+const initialState: StepperState = {
+  steps: [],
+  currentStep: 0,
+  seats: {
+    premium: 0,
+    standard: 0,
+    eco: 0,
+  },
+  customer: {
+    name: '',
+    email: '',
+    phone: '',
+    coupon: '',
+  },
+};
 
 const stepper = createSlice({
   name: 'stepper',
@@ -27,8 +52,17 @@ const stepper = createSlice({
       ...state,
       steps: action.payload,
     }),
+    setSeats: (state, action: PayloadAction<StepperState['seats']>) => ({
+      ...state,
+      seats: action.payload,
+    }),
+    setCustomer: (state, action: PayloadAction<StepperState['customer']>) => ({
+      ...state,
+      customer: action.payload,
+    }),
   },
 });
 
 export default stepper.reducer;
-export const { increment, decrement, setSteps } = stepper.actions;
+export const { increment, decrement, setSteps, setSeats, setCustomer } =
+  stepper.actions;

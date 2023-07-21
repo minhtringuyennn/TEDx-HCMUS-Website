@@ -7,7 +7,7 @@ import CTAButton from 'components/CTAButton/CTAButton';
 import About from './Components/AboutSection';
 
 const Home = () => {
-  const date = '2023-07-01T00:00:00+07:00';
+  const date = '2023-08-03T23:49:00+07:00';
   return (
     <Styled>
       <Navbar />
@@ -21,7 +21,7 @@ const Home = () => {
         </div>
         <div className="container grid-item-b">
           <div className="content">
-            <h3>Hạn mua vé early bird</h3>
+            <h3>Hạn mua vé inSanity</h3>
             <Countdown date={date} />
           </div>
           <CTAButton />

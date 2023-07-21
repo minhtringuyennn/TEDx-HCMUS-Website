@@ -25,17 +25,16 @@ const CinemaSeats = () => {
             <div className="zone">
               {map.map((row) => (
                 <div className="row">
-                  {row.map((seat) => {
-                    if (seat === 'X') return <Seat className="reserved" />;
-                    return <Seat />;
-                  })}
+                  {row.map(() => (
+                    <Seat />
+                  ))}
                 </div>
               ))}
               <div className="map-text">{key}</div>
             </div>
           );
         })}
-        <div style={{ display: 'flex' }}>
+        {/* <div style={{ display: 'flex' }}>
           <div className="map-notice" style={{ alignItems: 'center' }}>
             <Seat
               style={{
@@ -49,7 +48,7 @@ const CinemaSeats = () => {
             <Seat style={{ background: '#b07979' }} />
             <div>Đã đặt</div>
           </div>
-        </div>
+        </div> */}
       </div>
     </Styled>
   );
@@ -85,7 +84,7 @@ const Styled = styled.div`
       over-flow: hidden;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 43, 6, 0.3);
+      background: rgba(255, 43, 6, 0.2);
       padding: 1rem;
       border-radius: 4px;
       &:hover {
@@ -98,12 +97,12 @@ const Styled = styled.div`
         gap: 1px;
       }
       .map-text {
-        opacity: 0;
+        opacity: 0.8;
         position: absolute;
         height: auto;
         width: auto;
         font-weight: bold;
-        font-size: 3rem;
+        font-size: 2rem;
       }
     }
   }

@@ -8,30 +8,34 @@ import _ from 'lodash';
 import { z } from 'zod';
 
 const FormSchema = z.object({
-  FullName: z.string().min(2),
-  Email: z.string().email(),
-  Phone: z.string().min(10),
-  Coupon: z.string().optional(),
+  name: z.string().min(2),
+  email: z.string().email(),
+  phone: z.string().min(10),
+  coupon: z.string().optional(),
 });
 
 const StepInfo = () => {
-  const { increment, decrement } = useStepper();
+  const { increment, decrement, customer, setCustomer } = useStepper();
   const [formValues, setFormValues] = useState({
-    FullName: '',
-    Email: '',
-    Phone: '',
-    Coupon: '',
+    name: '',
+    email: '',
+    phone: '',
+    coupon: '',
   });
   const form = Form.useFormInstance();
 
-  const { FullName, Email, Phone } = formValues;
+  const { name, email, phone } = formValues;
 
   const isValid = useMemo(() => {
-    if (FullName && Email && Phone) {
-      return FormSchema.safeParse(formValues);
+    if (name && email && phone) {
+      const parseValid = FormSchema.safeParse(formValues);
+      if (parseValid.success) {
+        setCustomer(formValues);
+        return true;
+      }
     }
     return false;
-  }, [FullName, Email, Phone, formValues]);
+  }, [name, email, phone, formValues]);
 
   return (
     <StepBody>
@@ -60,7 +64,7 @@ const StepInfo = () => {
             >
               <Form.Item
                 label="Họ và tên"
-                name="FullName"
+                name="name"
                 className="form-item"
                 required
               >
@@ -71,7 +75,7 @@ const StepInfo = () => {
               </Form.Item>
               <Form.Item
                 label="Email"
-                name="Email"
+                name="email"
                 className="form-item"
                 required
               >
@@ -79,7 +83,7 @@ const StepInfo = () => {
               </Form.Item>
               <Form.Item
                 label="Số điện thoại"
-                name="Phone"
+                name="phone"
                 className="form-item"
                 required
               >
@@ -90,7 +94,7 @@ const StepInfo = () => {
               </Form.Item>
               <Form.Item
                 label="Mã giảm giá"
-                name="Coupon"
+                name="coupon"
                 className="form-item"
               >
                 <InputField
@@ -121,25 +125,29 @@ const StepInfo = () => {
 };
 
 export default StepInfo;
+type seatKey = 'premium' | 'standard' | 'eco';
+
+interface BookingItem {
+  title: string;
+  single: number;
+  number: number;
+}
 
 const BookingInfo = () => {
-  const booking = [
-    {
-      title: 'Ghế hạng Premium',
-      single: 300000,
-      number: 1,
-    },
-    {
-      title: 'Combo ghế đôi hạng A',
-      single: 560000,
-      number: 1,
-    },
-  ];
+  const { seats } = useStepper();
+  const seatsBooking: BookingItem[] = Object.keys(seats).map((key) => ({
+    title: key as seatKey, // Cast the key to seatKey
+    single: 1000, // Replace with the actual price for each seat type
+    number: seats[key as seatKey], // Cast the key to seatKey
+  }));
+
+  console.log(seatsBooking);
+
   let total = 0;
   return (
     <InfoSection>
       <h3>Đơn hàng của bạn</h3>
-      {booking.map((item) => {
+      {seatsBooking.map((item) => {
         total += item.single * item.number;
         return (
           <div className="booking-des" key={item.title}>

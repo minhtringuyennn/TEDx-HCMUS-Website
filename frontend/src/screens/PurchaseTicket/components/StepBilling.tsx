@@ -54,9 +54,13 @@ const StepBilling = () => {
         <BankContainer
           title="Số tiền"
           value={`${numberWithCommas(300000)}đ`}
-          copy={`${numberWithCommas(300000)}đ`}
+          copy="300000"
         />
-        <BankContainer title="Số tiền" value="TXUS1234567" copy="TXUS1234567" />
+        <BankContainer
+          title="Nội dung chuyển khoản"
+          value="TXUS1234567"
+          copy="TXUS1234567"
+        />
         <p className="bank-notice">
           Lưu ý: Vui lòng <span>không chỉnh sửa</span> nội dung chuyển khoản để
           hệ thống có thể kiểm tra tự động và <span>lưu lại</span> kết quả giao

@@ -18,13 +18,13 @@ const CTAButton = () => {
         <div className="content">
           <h3>Đặt vé TEDx Talk 2023: inSanity</h3>
           <div className="cards-container">
-            <Link to={`/${Path.Track}`} replace className="card">
+            <div className="card-disabled">
               <Search className="option-icon" />
               <div className="option">
                 <div className="option-title">Đã có vé</div>
                 <div className="option-description">Tra cứu đơn hàng</div>
               </div>
-            </Link>
+            </div>
             <Link to={`/${Path.Purchase}`} replace className="card">
               <Ticket className="option-icon" />
               <div className="option">
@@ -74,6 +74,24 @@ const Styled = styled.div`
       border: 2px solid ${({ theme }) => theme.colors.primary.default};
       color: ${({ theme }) => theme.colors.primary.default};
     }
+  }
+  .card-disabled {
+    text-decoration: none;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0px;
+    border-radius: 8px;
+    border: 2px solid ${({ theme }) => theme.colors.gray};
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    color: ${({ theme }) => theme.colors.lightGray};
+    transition: 200ms ease-in-out;
+    opacity: 0.5;
+    cursor: not-allowed;
   }
   .option-icon {
     color: inherit;
