@@ -6,6 +6,7 @@ const steps = (state: RootState) => stepperSelector(state).steps;
 const currentStep = (state: RootState) => stepperSelector(state).currentStep;
 const seats = (state: RootState) => stepperSelector(state).seats;
 const customer = (state: RootState) => stepperSelector(state).customer;
+const seatsState = (state: RootState) => stepperSelector(state).seatsState;
 
 const StepperSelector = {
   stepperSelector,
@@ -13,5 +14,6 @@ const StepperSelector = {
   currentStep,
   seats,
   customer,
+  seatsState,
 };
 export default StepperSelector;

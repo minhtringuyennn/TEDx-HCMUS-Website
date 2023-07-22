@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStepper } from 'hooks';
 import styled from 'styled-components';
 import Button from 'components/Button';
 import Modal from 'components/Modal/Modal';
 import CinemaSeats from './CinemaSeats';
 import TicketData from './ticketData.json';
+import SeatData from './seatData.json';
 
 function numberWithCommas(x: number) {
   let s = x.toString();
@@ -69,9 +70,68 @@ const QuantityGroup: React.FC<QuantityGroupProps> = ({ seatKey }) => {
 };
 
 const StepTicket = () => {
-  const { increment } = useStepper();
+  const { seats, increment, setSeatsState } = useStepper();
   const [isModalOpen, setModalState] = React.useState(false);
   const toggleModal = () => setModalState(!isModalOpen);
+
+  const isValid = seats.premium + seats.standard + seats.eco > 0;
+
+  console.log(seats);
+
+  const seatsState = {
+    premium: {
+      quadSeat: 0,
+      duoSeat: 0,
+      singleSeat: 0,
+    },
+    standard: {
+      quadSeat: 0,
+      duoSeat: 0,
+      singleSeat: 0,
+    },
+    eco: {
+      quadSeat: 0,
+      duoSeat: 0,
+      singleSeat: 0,
+    },
+    payment: {
+      originalPrice: 0,
+      discount: {
+        type: '',
+        value: 0,
+      },
+      actualPrice: 0,
+    },
+  };
+
+  // let tempPrice = 0;
+  const [tempPrice, setTempPrice] = useState(0);
+
+  useEffect(() => {
+    Object.entries(seats).forEach(([key, value]) => {
+      seatsState[key as SeatKeyType].quadSeat = Math.floor(value / 4);
+      seatsState[key as SeatKeyType].duoSeat = Math.floor((value % 4) / 2);
+      seatsState[key as SeatKeyType].singleSeat = (value % 4) % 2;
+    });
+
+    const result = Object.entries(seatsState)
+      .map(([key, value]) => {
+        if (key === 'payment') return 0;
+
+        const seatType = SeatData[key as SeatKeyType].price;
+
+        const typePrice =
+          value.quadSeat * seatType.quadSeat +
+          value.duoSeat * seatType.duoSeat +
+          value.singleSeat * seatType.singleSeat;
+
+        return typePrice;
+      })
+      .reduce((a, b) => a + b, 0);
+
+    setTempPrice(result);
+    // setSeatsState(seatsState);
+  }, [seats]);
 
   return (
     <StepBody>
@@ -83,6 +143,16 @@ const StepTicket = () => {
             <QuantityGroup seatKey={value.key as SeatKeyType} />
           </div>
         ))}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <span>Tạm tính</span>
+          <span>{numberWithCommas(tempPrice)}</span>
+        </div>
         <Button typeFill="text" onClick={toggleModal} className="more-info">
           <span
             style={{
@@ -100,9 +170,15 @@ const StepTicket = () => {
               key={value.title}
             />
           ))}
+          <span>
+            Mỗi vé sẽ được một phần quà gồm túi tote, lanyard, móc khoá và
+            sticker.
+          </span>
         </Modal>
         <ButtonGroup>
-          <Button onClick={increment}>Tiếp theo</Button>
+          <Button onClick={increment} disabled={!isValid}>
+            Tiếp theo
+          </Button>
         </ButtonGroup>
       </div>
       <div className="grid-right">
@@ -119,7 +195,7 @@ const StepBody = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   text-align: center;
-  padding-bottom: 2rem;
+  margin-bottom: 2rem;
   .more-info {
     font-style: italic;
     font-weight: normal;

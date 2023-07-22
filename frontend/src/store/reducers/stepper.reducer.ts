@@ -14,6 +14,32 @@ interface StepperState {
     phone: string;
     coupon: string;
   };
+  // TODO: Migrate seatsState to seats Object
+  seatsState: {
+    premium: {
+      quadSeat: number;
+      duoSeat: number;
+      singleSeat: number;
+    };
+    standard: {
+      quadSeat: number;
+      duoSeat: number;
+      singleSeat: number;
+    };
+    eco: {
+      quadSeat: number;
+      duoSeat: number;
+      singleSeat: number;
+    };
+    payment: {
+      originalPrice: number;
+      discount: {
+        type: string;
+        value: number;
+      };
+      actualPrice: number;
+    };
+  };
 }
 
 const initialState: StepperState = {
@@ -29,6 +55,31 @@ const initialState: StepperState = {
     email: '',
     phone: '',
     coupon: '',
+  },
+  seatsState: {
+    premium: {
+      quadSeat: 0,
+      duoSeat: 0,
+      singleSeat: 0,
+    },
+    standard: {
+      quadSeat: 0,
+      duoSeat: 0,
+      singleSeat: 0,
+    },
+    eco: {
+      quadSeat: 0,
+      duoSeat: 0,
+      singleSeat: 0,
+    },
+    payment: {
+      originalPrice: 0,
+      discount: {
+        type: '',
+        value: 0,
+      },
+      actualPrice: 0,
+    },
   },
 };
 
@@ -60,9 +111,22 @@ const stepper = createSlice({
       ...state,
       customer: action.payload,
     }),
+    setSeatsState: (
+      state,
+      action: PayloadAction<StepperState['seatsState']>,
+    ) => ({
+      ...state,
+      seatsState: action.payload,
+    }),
   },
 });
 
 export default stepper.reducer;
-export const { increment, decrement, setSteps, setSeats, setCustomer } =
-  stepper.actions;
+export const {
+  increment,
+  decrement,
+  setSteps,
+  setSeats,
+  setCustomer,
+  setSeatsState,
+} = stepper.actions;

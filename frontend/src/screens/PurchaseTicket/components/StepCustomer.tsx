@@ -14,6 +14,8 @@ const FormSchema = z.object({
   coupon: z.string().optional(),
 });
 
+
+
 const StepInfo = () => {
   const { increment, decrement, customer, setCustomer } = useStepper();
   const [formValues, setFormValues] = useState({
@@ -28,11 +30,14 @@ const StepInfo = () => {
 
   const isValid = useMemo(() => {
     if (name && email && phone) {
-      const parseValid = FormSchema.safeParse(formValues);
+      const phone = formValues.phone.replace(/\D/g, '');
+      const fornatFormValues = { ...formValues, phone };
+
+      const parseValid = FormSchema.safeParse(fornatFormValues);
       if (parseValid.success) {
-        setCustomer(formValues);
+        setCustomer(fornatFormValues);
         return true;
-      }
+      } 
     }
     return false;
   }, [name, email, phone, formValues]);
@@ -141,8 +146,6 @@ const BookingInfo = () => {
     number: seats[key as seatKey], // Cast the key to seatKey
   }));
 
-  console.log(seatsBooking);
-
   let total = 0;
   return (
     <InfoSection>
@@ -184,6 +187,7 @@ const StepBody = styled.div`
   display: grid;
   grid-template-columns: 1fr 50% 1fr;
   text-align: center;
+  margin-bottom: 2rem;
   .grid-item {
     display: flex;
     flex-direction: column;

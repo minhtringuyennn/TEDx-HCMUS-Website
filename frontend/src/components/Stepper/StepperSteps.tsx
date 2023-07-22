@@ -11,8 +11,6 @@ export const StepperSteps = ({ children, ...props }: StepperStepsProps) => {
     const stepperSteps = React.Children.toArray(children).map(
       (step: React.ReactNode) => React.isValidElement(step) && step.props.name,
     );
-    // const stepperSteps = ['Step 1', 'Step 2', 'Step 3'];
-    // console.log(stepperSteps);
     setSteps(stepperSteps);
   }, [setSteps]);
 

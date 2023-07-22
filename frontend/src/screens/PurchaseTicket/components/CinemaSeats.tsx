@@ -103,6 +103,7 @@ const Styled = styled.div`
         width: auto;
         font-weight: bold;
         font-size: 2rem;
+        text-transform: uppercase;
       }
     }
   }

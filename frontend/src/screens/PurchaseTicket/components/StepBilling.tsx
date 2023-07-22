@@ -27,7 +27,7 @@ const BankContainer = ({ title, value, copy }: BankInfo) => (
 );
 
 const StepBilling = () => {
-  const { increment, decrement } = useStepper();
+  const { increment, decrement, seatsState } = useStepper();
   async function downloadImage(imageSrc: string) {
     const image = await fetch(imageSrc);
     const imageBlog = await image.blob();
@@ -53,8 +53,8 @@ const StepBilling = () => {
         ))}
         <BankContainer
           title="Số tiền"
-          value={`${numberWithCommas(300000)}đ`}
-          copy="300000"
+          value={`${numberWithCommas(seatsState.payment.actualPrice)}đ`}
+          copy={`${seatsState.payment.actualPrice}`}
         />
         <BankContainer
           title="Nội dung chuyển khoản"
@@ -87,6 +87,7 @@ const StepBody = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   text-align: center;
+  margin-bottom: 2rem;
   .grid-left {
     display: flex;
     flex-direction: column;
