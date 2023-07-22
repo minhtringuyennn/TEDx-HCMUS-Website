@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { Quit } from 'icons';
 import styled from 'styled-components';
 
-interface ModalProps {
+interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+  ...props
+}: ModalProps) => {
   const outsideRef = React.useRef(null);
 
   const handleCloseOnOverlay = (
@@ -27,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         onClick={handleCloseOnOverlay}
         role="presentation"
       />
-      <div className="modal-box">
+      <div className="modal-box" {...props}>
         <button type="button" className="quit-button" onClick={onClose}>
           <Quit style={{ width: '100%', height: '100%' }} />
         </button>

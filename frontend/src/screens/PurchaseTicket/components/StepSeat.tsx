@@ -90,7 +90,7 @@ const QuantityGroup: React.FC<QuantityGroupProps> = ({ seatKey }) => {
 const countNumSeat = (seat: any) => seat.single + seat.duo * 2 + seat.quad * 4;
 
 const StepTicket = () => {
-  const { seats, increment, setSeats } = useStepper();
+  const { seats, increment } = useStepper();
   const [isModalOpen, setModalState] = React.useState(false);
   const toggleModal = () => setModalState(!isModalOpen);
 
