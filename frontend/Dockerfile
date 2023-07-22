@@ -3,14 +3,16 @@ ARG ENVIRONMENT=production
 
 # Stage 1: Build stage (common for both development and production)
 FROM node:18 as build-stage
+RUN echo "Running in $ENVIRONMENT mode"
 
 WORKDIR /frontend
-COPY package.json yarn.lock ./
+COPY . .
 RUN rm -rf node_modules
 RUN yarn install --frozen-lockfile
-COPY . .
 
-RUN if [ "$ENVIRONMENT" = "production" ]; then yarn build; fi
+# Pass the ENVIRONMENT build argument to the container
+ARG ENVIRONMENT
+RUN if [ "$ENVIRONMENT" = "production" ]; then yarn build; else yarn dev; fi
 
 # Stage 2: Production stage
 FROM nginx:alpine as production-stage
@@ -19,16 +21,5 @@ FROM nginx:alpine as production-stage
 COPY --from=build-stage /frontend/dist /usr/share/nginx/html
 
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-
-# Stage 3: Development stage
-FROM node:18 as development-stage
-
-WORKDIR /frontend
-COPY package.json yarn.lock ./
-RUN rm -rf node_modules
-RUN yarn install --frozen-lockfile
-COPY . .
-
-CMD ["yarn", "dev"]
 EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]
