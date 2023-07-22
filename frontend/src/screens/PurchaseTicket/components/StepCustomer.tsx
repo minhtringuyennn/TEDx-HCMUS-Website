@@ -6,6 +6,7 @@ import InputField from 'components/InputField/InputField';
 import { Form, ConfigProvider } from 'antd';
 import _ from 'lodash';
 import { z } from 'zod';
+import TicketData from './ticketData.json';
 
 const FormSchema = z.object({
   name: z.string().min(2),
@@ -14,15 +15,10 @@ const FormSchema = z.object({
   coupon: z.string().optional(),
 });
 
-
-
 const StepInfo = () => {
   const { increment, decrement, customer, setCustomer } = useStepper();
   const [formValues, setFormValues] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    coupon: '',
+    ...customer,
   });
   const form = Form.useFormInstance();
 
@@ -31,13 +27,13 @@ const StepInfo = () => {
   const isValid = useMemo(() => {
     if (name && email && phone) {
       const phone = formValues.phone.replace(/\D/g, '');
-      const fornatFormValues = { ...formValues, phone };
+      const formatFormValues = { ...formValues, phone };
 
-      const parseValid = FormSchema.safeParse(fornatFormValues);
+      const parseValid = FormSchema.safeParse(formatFormValues);
       if (parseValid.success) {
-        setCustomer(fornatFormValues);
+        setCustomer(formatFormValues);
         return true;
-      } 
+      }
     }
     return false;
   }, [name, email, phone, formValues]);
@@ -76,6 +72,7 @@ const StepInfo = () => {
                 <InputField
                   placeholder="Nhập họ và tên"
                   className="form-item"
+                  defaultValue={customer.name}
                 />
               </Form.Item>
               <Form.Item
@@ -84,7 +81,11 @@ const StepInfo = () => {
                 className="form-item"
                 required
               >
-                <InputField placeholder="Nhập email" className="form-item" />
+                <InputField
+                  placeholder="Nhập email"
+                  className="form-item"
+                  defaultValue={customer.email}
+                />
               </Form.Item>
               <Form.Item
                 label="Số điện thoại"
@@ -95,9 +96,10 @@ const StepInfo = () => {
                 <InputField
                   placeholder="Nhập số điện thoại"
                   className="form-item"
+                  defaultValue={customer.phone}
                 />
               </Form.Item>
-              <Form.Item
+              {/* <Form.Item
                 label="Mã giảm giá"
                 name="coupon"
                 className="form-item"
@@ -106,7 +108,7 @@ const StepInfo = () => {
                   placeholder="Nhập mã giảm giá"
                   className="form-item"
                 />
-              </Form.Item>
+              </Form.Item> */}
             </Form>
           </ConfigProvider>
           {!isValid && (
@@ -131,6 +133,7 @@ const StepInfo = () => {
 
 export default StepInfo;
 type seatKey = 'premium' | 'standard' | 'eco';
+type seatKey2 = 'single' | 'duo' | 'quad';
 
 interface BookingItem {
   title: string;
@@ -138,39 +141,62 @@ interface BookingItem {
   number: number;
 }
 
+interface BookingGroup {
+  title: string;
+  seat: object;
+}
+
+const convertTitle = (seat: string) => {
+  if (seat === 'single') return 'đơn';
+  if (seat === 'duo') return 'đôi';
+  return 'nhóm';
+};
+
 const BookingInfo = () => {
   const { seats } = useStepper();
-  const seatsBooking: BookingItem[] = Object.keys(seats).map((key) => ({
-    title: key as seatKey, // Cast the key to seatKey
-    single: 1000, // Replace with the actual price for each seat type
-    number: seats[key as seatKey], // Cast the key to seatKey
-  }));
+  const seatsGroup: BookingGroup[] = Object.keys(seats)
+    .filter((key) => key !== 'payment')
+    .map((key) => ({
+      title: key as seatKey, // Cast the key to seatKey
+      seat: seats[key as seatKey], // Cast the key to seatKey
+    }));
 
-  let total = 0;
+  const seatItem: BookingItem[] = [];
+  seatsGroup.forEach((seat) => {
+    console.log(
+      Object.entries(seat.seat).forEach((item) => {
+        if (item[1] > 0)
+          seatItem.push({
+            title: `Ghế ${convertTitle(item[0])} ${seat.title}`,
+            single: TicketData[seat.title as seatKey][item[0] as seatKey2],
+            number: item[1],
+          });
+      }),
+    );
+  });
+
+  const total = 0;
   return (
     <InfoSection>
       <h3>Đơn hàng của bạn</h3>
-      {seatsBooking.map((item) => {
-        total += item.single * item.number;
-        return (
-          <div className="booking-des" key={item.title}>
-            <div className="booking-item">
-              <div>{item.number}</div>
-              <div className="booking-item-title">
-                <div>{item.title}</div>
-                <div className="booking-item-price">{`Đơn giá: ${numberWithCommas(
-                  item.single,
-                )}`}</div>
-              </div>
+      {seatItem.map((seat) => (
+        <div className="booking-des">
+          <div className="booking-item">
+            <div>{seat.number}</div>
+            <div className="booking-item-title">
+              <div>{seat.title}</div>
+              <div className="booking-item-price">{`Đơn giá: ${numberWithCommas(
+                seat.single,
+              )}`}</div>
             </div>
-            <div>{numberWithCommas(item.single * item.number)}</div>
           </div>
-        );
-      })}
+          <div>{numberWithCommas(seat.single * seat.number)}</div>
+        </div>
+      ))}
       <div className="ticket-group-divider" />
       <div className="booking-des">
         <div>Tổng đơn hàng (VNĐ)</div>
-        <div>{numberWithCommas(total)}</div>
+        <div>{numberWithCommas(seats.payment.actualPrice)}</div>
       </div>
     </InfoSection>
   );
@@ -229,7 +255,6 @@ const InfoSection = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    align-self: stretch;
   }
   .booking-item {
     display: flex;

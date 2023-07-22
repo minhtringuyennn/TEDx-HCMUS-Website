@@ -7,9 +7,29 @@ import { RootState } from '../store/reducers';
 type ParaFunction = (arg: Array<string>) => void;
 
 type SeatsFunction = (arg: {
-  premium: number;
-  standard: number;
-  eco: number;
+  premium: {
+    quad: number;
+    duo: number;
+    single: number;
+  };
+  standard: {
+    quad: number;
+    duo: number;
+    single: number;
+  };
+  eco: {
+    quad: number;
+    duo: number;
+    single: number;
+  };
+  payment: {
+    originalPrice: number;
+    discount: {
+      type: string;
+      value: number;
+    };
+    actualPrice: number;
+  };
 }) => void;
 
 type CustomerFunction = (arg: {
@@ -48,32 +68,27 @@ type SeatsStateFunction = (arg: {
 type UseStepperReturn = {
   steps: RootState['stepper']['steps'];
   currentStep: RootState['stepper']['currentStep'];
-  seats: {
-    premium: number;
-    standard: number;
-    eco: number;
-  };
   customer: {
     name: string;
     email: string;
     phone: string;
     coupon: string;
   };
-  seatsState: {
+  seats: {
     premium: {
-      quadSeat: number;
-      duoSeat: number;
-      singleSeat: number;
+      quad: number;
+      duo: number;
+      single: number;
     };
     standard: {
-      quadSeat: number;
-      duoSeat: number;
-      singleSeat: number;
+      quad: number;
+      duo: number;
+      single: number;
     };
     eco: {
-      quadSeat: number;
-      duoSeat: number;
-      singleSeat: number;
+      quad: number;
+      duo: number;
+      single: number;
     };
     payment: {
       originalPrice: number;
@@ -89,7 +104,6 @@ type UseStepperReturn = {
   setSteps: ParaFunction;
   setSeats: SeatsFunction;
   setCustomer: CustomerFunction;
-  setSeatsState: SeatsStateFunction;
 };
 /**
  * An example for a custom hook that wraps a redux state selectors
@@ -102,7 +116,6 @@ const useStepper = (): UseStepperReturn => {
   const currentStep = useAppSelector(StepperSelector.currentStep);
   const seats = useAppSelector(StepperSelector.seats);
   const customer = useAppSelector(StepperSelector.customer);
-  const seatsState = useAppSelector(StepperSelector.seatsState);
 
   const increment: VoidFunction = React.useCallback(() => {
     dispatch(Action.increment());
@@ -120,7 +133,31 @@ const useStepper = (): UseStepperReturn => {
   );
 
   const setSeats: SeatsFunction = React.useCallback(
-    (newSeats: { premium: number; standard: number; eco: number }) => {
+    (newSeats: {
+      premium: {
+        quad: number;
+        duo: number;
+        single: number;
+      };
+      standard: {
+        quad: number;
+        duo: number;
+        single: number;
+      };
+      eco: {
+        quad: number;
+        duo: number;
+        single: number;
+      };
+      payment: {
+        originalPrice: number;
+        discount: {
+          type: string;
+          value: number;
+        };
+        actualPrice: number;
+      };
+    }) => {
       dispatch(Action.setSeats(newSeats));
     },
     [dispatch],
@@ -138,49 +175,16 @@ const useStepper = (): UseStepperReturn => {
     [dispatch],
   );
 
-  const setSeatsState: SeatsStateFunction = React.useCallback(
-    (newSeatsState: {
-      premium: {
-        quadSeat: number;
-        duoSeat: number;
-        singleSeat: number;
-      };
-      standard: {
-        quadSeat: number;
-        duoSeat: number;
-        singleSeat: number;
-      };
-      eco: {
-        quadSeat: number;
-        duoSeat: number;
-        singleSeat: number;
-      };
-      payment: {
-        originalPrice: number;
-        discount: {
-          type: string;
-          value: number;
-        };
-        actualPrice: number;
-      };
-    }) => {
-      dispatch(Action.setSeatsState(newSeatsState));
-    },
-    [dispatch],
-  );
-
   return {
     steps,
     currentStep,
     seats,
     customer,
-    seatsState,
     increment,
     decrement,
     setSteps,
     setSeats,
     setCustomer,
-    setSeatsState,
   };
 };
 

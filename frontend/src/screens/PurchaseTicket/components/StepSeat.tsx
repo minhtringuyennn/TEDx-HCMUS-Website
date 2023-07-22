@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useStepper } from 'hooks';
 import styled from 'styled-components';
 import Button from 'components/Button';
 import Modal from 'components/Modal/Modal';
 import CinemaSeats from './CinemaSeats';
 import TicketData from './ticketData.json';
-import SeatData from './seatData.json';
 
 function numberWithCommas(x: number) {
   let s = x.toString();
@@ -14,25 +13,11 @@ function numberWithCommas(x: number) {
   return s;
 }
 
-interface PriceProps {
-  title: string;
-  types: Array<{
-    title: string;
-    price: number;
-  }>;
+function parseTitleTicket(x: string) {
+  if (x === 'single') return 'Ghế đơn (x1 ghế)';
+  if (x === 'duo') return 'Combo ghế đôi (x2 ghế)';
+  return 'Combo ghế nhóm (x4 ghế)';
 }
-
-const TicketPrice = ({ title, types }: PriceProps) => (
-  <TicketGroup>
-    <div>{title}</div>
-    {types.map((type) => (
-      <div className="ticket-type" key={type.title}>
-        <div className="ticket-type-title">{type.title}</div>
-        <div className="ticket-type-price">{numberWithCommas(type.price)}</div>
-      </div>
-    ))}
-  </TicketGroup>
-);
 
 // Define the prop type for seatKey
 type SeatKeyType = 'premium' | 'standard' | 'eco';
@@ -44,17 +29,50 @@ interface QuantityGroupProps {
 
 const QuantityGroup: React.FC<QuantityGroupProps> = ({ seatKey }) => {
   const { seats, setSeats } = useStepper();
-  const [quan, setQuanState] = React.useState(seats[seatKey] || 0);
+  const [quan, setQuanState] = React.useState(
+    seats[seatKey].quad * 4 + seats[seatKey].duo * 2 + seats[seatKey].single ||
+      0,
+  );
   const increase = () => setQuanState(quan + 1);
   const decrease = () => setQuanState(quan === 0 ? 0 : quan - 1);
+  const seatsState = {
+    premium: { ...seats.premium },
+    standard: { ...seats.standard },
+    eco: { ...seats.eco },
+  };
 
   // Update the seats state when the quantity changes
   useEffect(() => {
+    seatsState[seatKey].duo = Math.floor((quan % 4) / 2);
+    seatsState[seatKey].quad = Math.floor(quan / 4);
+    seatsState[seatKey].single = quan % 2;
+
+    const result = Object.entries(seatsState)
+      .map(([key, value]) => {
+        const seatType = TicketData[key as SeatKeyType];
+
+        const typePrice =
+          value.quad * seatType.quad +
+          value.duo * seatType.duo +
+          value.single * seatType.single;
+
+        return typePrice;
+      })
+      .reduce((a, b) => a + b, 0);
     setSeats({
       ...seats,
-      [seatKey]: quan,
+      [seatKey]: {
+        quad: seatsState[seatKey].quad,
+        duo: seatsState[seatKey].duo,
+        single: seatsState[seatKey].single,
+      },
+      payment: {
+        ...seats.payment,
+        originalPrice: result,
+        actualPrice: result,
+      },
     });
-  }, [quan, seatKey, setSeats]);
+  }, [quan, setSeats]);
 
   return (
     <Quantity>
@@ -69,76 +87,27 @@ const QuantityGroup: React.FC<QuantityGroupProps> = ({ seatKey }) => {
   );
 };
 
+const countNumSeat = (seat: any) => seat.single + seat.duo * 2 + seat.quad * 4;
+
 const StepTicket = () => {
-  const { seats, increment, setSeatsState } = useStepper();
+  const { seats, increment, setSeats } = useStepper();
   const [isModalOpen, setModalState] = React.useState(false);
   const toggleModal = () => setModalState(!isModalOpen);
 
-  const isValid = seats.premium + seats.standard + seats.eco > 0;
-
-  console.log(seats);
-
-  const seatsState = {
-    premium: {
-      quadSeat: 0,
-      duoSeat: 0,
-      singleSeat: 0,
-    },
-    standard: {
-      quadSeat: 0,
-      duoSeat: 0,
-      singleSeat: 0,
-    },
-    eco: {
-      quadSeat: 0,
-      duoSeat: 0,
-      singleSeat: 0,
-    },
-    payment: {
-      originalPrice: 0,
-      discount: {
-        type: '',
-        value: 0,
-      },
-      actualPrice: 0,
-    },
-  };
-
-  // let tempPrice = 0;
-  const [tempPrice, setTempPrice] = useState(0);
-
-  useEffect(() => {
-    Object.entries(seats).forEach(([key, value]) => {
-      seatsState[key as SeatKeyType].quadSeat = Math.floor(value / 4);
-      seatsState[key as SeatKeyType].duoSeat = Math.floor((value % 4) / 2);
-      seatsState[key as SeatKeyType].singleSeat = (value % 4) % 2;
-    });
-
-    const result = Object.entries(SeatData)
-      .map(([key, value]) => {
-        const seatType = value.price;
-
-        const typePrice =
-          seatsState[key as SeatKeyType].quadSeat * seatType.quadSeat +
-          seatsState[key as SeatKeyType].duoSeat * seatType.duoSeat +
-          seatsState[key as SeatKeyType].singleSeat * seatType.singleSeat;
-
-        return typePrice;
-      })
-      .reduce((a, b) => a + b, 0);
-
-    setTempPrice(result);
-    // setSeatsState(seatsState);
-  }, [seats]);
+  const isValid =
+    countNumSeat(seats.premium) +
+      countNumSeat(seats.standard) +
+      countNumSeat(seats.eco) >
+    0;
 
   return (
     <StepBody>
       <div className="grid-left">
         <h3>Giá vé</h3>
-        {Object.entries(TicketData).map(([title, value]) => (
-          <div className="ticket-opt" key={value.key}>
-            <div className="ticket-type-title">{value.title}</div>
-            <QuantityGroup seatKey={value.key as SeatKeyType} />
+        {Object.entries(TicketData).map(([key, value]) => (
+          <div className="ticket-opt">
+            <div className="ticket-type-title">{`Ghế hạng ${key}`}</div>
+            <QuantityGroup seatKey={key as SeatKeyType} />
           </div>
         ))}
         <div
@@ -149,7 +118,7 @@ const StepTicket = () => {
           }}
         >
           <span>Tạm tính</span>
-          <span>{numberWithCommas(tempPrice)}</span>
+          <span>{numberWithCommas(seats.payment.originalPrice)}</span>
         </div>
         <Button typeFill="text" onClick={toggleModal} className="more-info">
           <span
@@ -161,12 +130,22 @@ const StepTicket = () => {
           </span>
         </Button>
         <Modal isOpen={isModalOpen} onClose={toggleModal}>
-          {Object.entries(TicketData).map(([title, value]) => (
-            <TicketPrice
-              title={value.title}
-              types={value.types}
-              key={value.title}
-            />
+          {Object.keys(TicketData).map((key) => (
+            <TicketGroup>
+              <div>{`Vé hạng ${key}`}</div>
+              {Object.entries(TicketData[key as SeatKeyType]).map(
+                ([key, value]) => (
+                  <div className="ticket-type">
+                    <div className="ticket-type-title">
+                      {parseTitleTicket(key)}
+                    </div>
+                    <div className="ticket-type-price">
+                      {numberWithCommas(value)}
+                    </div>
+                  </div>
+                ),
+              )}
+            </TicketGroup>
           ))}
           <span>
             Mỗi vé sẽ được một phần quà gồm túi tote, lanyard, móc khoá và

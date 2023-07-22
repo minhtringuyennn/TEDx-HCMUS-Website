@@ -3,11 +3,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 interface StepperState {
   steps: string[];
   currentStep: number;
-  seats: {
-    premium: number;
-    standard: number;
-    eco: number;
-  };
   customer: {
     name: string;
     email: string;
@@ -15,21 +10,21 @@ interface StepperState {
     coupon: string;
   };
   // TODO: Migrate seatsState to seats Object
-  seatsState: {
+  seats: {
     premium: {
-      quadSeat: number;
-      duoSeat: number;
-      singleSeat: number;
+      quad: number;
+      duo: number;
+      single: number;
     };
     standard: {
-      quadSeat: number;
-      duoSeat: number;
-      singleSeat: number;
+      quad: number;
+      duo: number;
+      single: number;
     };
     eco: {
-      quadSeat: number;
-      duoSeat: number;
-      singleSeat: number;
+      quad: number;
+      duo: number;
+      single: number;
     };
     payment: {
       originalPrice: number;
@@ -45,32 +40,27 @@ interface StepperState {
 const initialState: StepperState = {
   steps: [],
   currentStep: 0,
-  seats: {
-    premium: 0,
-    standard: 0,
-    eco: 0,
-  },
   customer: {
     name: '',
     email: '',
     phone: '',
     coupon: '',
   },
-  seatsState: {
+  seats: {
     premium: {
-      quadSeat: 0,
-      duoSeat: 0,
-      singleSeat: 0,
+      quad: 0,
+      duo: 0,
+      single: 0,
     },
     standard: {
-      quadSeat: 0,
-      duoSeat: 0,
-      singleSeat: 0,
+      quad: 0,
+      duo: 0,
+      single: 0,
     },
     eco: {
-      quadSeat: 0,
-      duoSeat: 0,
-      singleSeat: 0,
+      quad: 0,
+      duo: 0,
+      single: 0,
     },
     payment: {
       originalPrice: 0,
@@ -111,22 +101,9 @@ const stepper = createSlice({
       ...state,
       customer: action.payload,
     }),
-    setSeatsState: (
-      state,
-      action: PayloadAction<StepperState['seatsState']>,
-    ) => ({
-      ...state,
-      seatsState: action.payload,
-    }),
   },
 });
 
 export default stepper.reducer;
-export const {
-  increment,
-  decrement,
-  setSteps,
-  setSeats,
-  setCustomer,
-  setSeatsState,
-} = stepper.actions;
+export const { increment, decrement, setSteps, setSeats, setCustomer } =
+  stepper.actions;
