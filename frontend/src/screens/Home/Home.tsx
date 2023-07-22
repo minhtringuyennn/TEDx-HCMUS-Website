@@ -4,27 +4,13 @@ import Navbar from 'components/NavBar/NavBar';
 import HeroBanner from 'assets';
 import Countdown from 'components/Countdown/Countdown';
 import CTAButton from 'components/CTAButton/CTAButton';
-import Modal from 'components/Modal/Modal';
 import About from './Components/AboutSection';
 
 const Home = () => {
   const date = '2023-08-03T23:49:00+07:00';
-  const [isModalOpen, setModalState] = React.useState(true);
-  const toggleModal = () => setModalState(!isModalOpen);
-
   return (
     <Styled>
       <Navbar />
-      <Modal
-        isOpen={isModalOpen}
-        onClose={toggleModal}
-        style={{ maxWidth: '400px' }}
-      >
-        <div style={{ color: 'white' }}>
-          Website đang trong quá trình hoàn thiện, các thanh toán có thể không
-          được ghi nhận, bạn chưa nên đặt vé qua trang này
-        </div>
-      </Modal>
       <section className="grid-container">
         <div className="grid-item-a">
           <img

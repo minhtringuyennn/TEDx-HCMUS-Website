@@ -18,7 +18,7 @@ const CTAButton = () => {
         <div className="content">
           <h3>Đặt vé TEDx Talk 2023: inSanity</h3>
           <div className="cards-container">
-            <div className="card-disabled">
+            <div className="card card-disabled">
               <Search className="option-icon" />
               <div className="option">
                 <div className="option-title">Đã có vé</div>
