@@ -37,7 +37,10 @@ type SeatsStateFunction = (arg: {
   };
   payment: {
     originalPrice: number;
-    discount: number;
+    discount: {
+      type: string;
+      value: number;
+    };
     actualPrice: number;
   };
 }) => void;
@@ -74,7 +77,10 @@ type UseStepperReturn = {
     };
     payment: {
       originalPrice: number;
-      discount: number;
+      discount: {
+        type: string;
+        value: number;
+      };
       actualPrice: number;
     };
   };
@@ -151,7 +157,10 @@ const useStepper = (): UseStepperReturn => {
       };
       payment: {
         originalPrice: number;
-        discount: number;
+        discount: {
+          type: string;
+          value: number;
+        };
         actualPrice: number;
       };
     }) => {

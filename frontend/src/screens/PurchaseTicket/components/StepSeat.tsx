@@ -114,16 +114,14 @@ const StepTicket = () => {
       seatsState[key as SeatKeyType].singleSeat = (value % 4) % 2;
     });
 
-    const result = Object.entries(seatsState)
+    const result = Object.entries(SeatData)
       .map(([key, value]) => {
-        if (key === 'payment') return 0;
-
-        const seatType = SeatData[key as SeatKeyType].price;
+        const seatType = value.price;
 
         const typePrice =
-          value.quadSeat * seatType.quadSeat +
-          value.duoSeat * seatType.duoSeat +
-          value.singleSeat * seatType.singleSeat;
+          seatsState[key as SeatKeyType].quadSeat * seatType.quadSeat +
+          seatsState[key as SeatKeyType].duoSeat * seatType.duoSeat +
+          seatsState[key as SeatKeyType].singleSeat * seatType.singleSeat;
 
         return typePrice;
       })

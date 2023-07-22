@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import { MOCK_PAGE_Y_OFFSET } from 'constants/test';
 
 // Make sure that "act" is allowed in this environment
 declare namespace globalThis {
@@ -20,7 +19,6 @@ Object.defineProperty(window, 'matchMedia', {
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
-    pageYOffset: MOCK_PAGE_Y_OFFSET,
   })),
 });
 
