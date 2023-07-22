@@ -28,6 +28,7 @@ jobs:
             tags: backend
           - context: ./frontend
             tags: frontend
+            
     permissions:
       contents: read
       packages: write
@@ -49,10 +50,14 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: PrepareReg Names
+        run: |
+          echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+            
       - name: Build and push Docker image
         uses: docker/build-push-action@v4.0.0
         with:
           context: ${{ matrix.context }}
           push: true
-          tags: ${{ matrix.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:${{ matrix.tags }}
           labels: ${{ steps.meta.outputs.labels }}
