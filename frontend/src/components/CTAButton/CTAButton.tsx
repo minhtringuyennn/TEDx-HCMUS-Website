@@ -18,7 +18,7 @@ const CTAButton = () => {
         <div className="content">
           <h3>Đặt vé TEDx Talk 2023: inSanity</h3>
           <div className="cards-container">
-            <div className="card card-disabled">
+            <div className="card-disabled">
               <Search className="option-icon" />
               <div className="option">
                 <div className="option-title">Đã có vé</div>
@@ -92,6 +92,12 @@ const Styled = styled.div`
     transition: 200ms ease-in-out;
     opacity: 0.5;
     cursor: not-allowed;
+    @media (max-width: ${({ theme }) => theme.size.sm}) {
+      flex-direction: row;
+      padding: 1rem;
+      gap: 1rem;
+      justify-content: start;
+    }
   }
   .option-icon {
     color: inherit;

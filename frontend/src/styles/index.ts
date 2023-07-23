@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Selima';
     font-style: normal;
     font-weight: normal;
-    src: url('../assets/fonts/Selima.otf') format('otf');
+    src: url('../assets/fonts/Selima.otf') format('opentype');
   }
 
   html {
