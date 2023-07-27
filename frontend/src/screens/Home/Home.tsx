@@ -4,9 +4,10 @@ import Navbar from 'components/NavBar/NavBar';
 import HeroBanner from 'assets';
 import Countdown from 'components/Countdown/Countdown';
 import CTAButton from 'components/CTAButton/CTAButton';
+import About from './Components/AboutSection';
 
 const Home = () => {
-  const date = '2023-07-01T00:00:00+07:00';
+  const date = '2023-08-03T23:49:00+07:00';
   return (
     <Styled>
       <Navbar />
@@ -20,12 +21,13 @@ const Home = () => {
         </div>
         <div className="container grid-item-b">
           <div className="content">
-            <h3>Hạn mua vé early bird</h3>
+            <h3>Hạn mua vé inSanity</h3>
             <Countdown date={date} />
           </div>
           <CTAButton />
         </div>
       </section>
+      <About />
     </Styled>
   );
 };
@@ -33,11 +35,12 @@ const Home = () => {
 const Styled = styled.div`
   section {
     height: 100vh;
-    padding: 5rem;
+    padding: 80px 80px 0 80px;
   }
   .hero-img {
     object-fit: contain;
     height: 100%;
+    width: 100%;
   }
   .container {
     display: inline-flex;
@@ -65,22 +68,32 @@ const Styled = styled.div`
     place-self: start center;
   }
 
-  @media (max-width: ${({ theme }) => theme.size.sm}) {
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     section {
       padding: 3rem 1rem;
+      padding-bottom: 0;
+      height: auto;
     }
-    .container {
-      gap: 0.5rem;
-    }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .grid-container {
       grid-template-rows: min-content auto;
     }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
+    .container {
+      gap: 0.5rem;
+    }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .grid-item-a {
       width: 100%;
       height: auto;
     }
+  }
+  @media screen and (max-width: ${({ theme }) => theme.size.sm}) {
     .hero-img {
-      width: 100%;
+      width: 90%;
       height: auto;
     }
   }

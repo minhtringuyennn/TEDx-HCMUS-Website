@@ -27,7 +27,7 @@ const BankContainer = ({ title, value, copy }: BankInfo) => (
 );
 
 const StepBilling = () => {
-  const { increment, decrement } = useStepper();
+  const { increment, decrement, seats } = useStepper();
   async function downloadImage(imageSrc: string) {
     const image = await fetch(imageSrc);
     const imageBlog = await image.blob();
@@ -53,14 +53,18 @@ const StepBilling = () => {
         ))}
         <BankContainer
           title="Số tiền"
-          value={`${numberWithCommas(300000)}đ`}
-          copy={`${numberWithCommas(300000)}đ`}
+          value={`${numberWithCommas(seats.payment.actualPrice)}đ`}
+          copy={`${seats.payment.actualPrice}`}
         />
-        <BankContainer title="Số tiền" value="TXUS1234567" copy="TXUS1234567" />
+        <BankContainer
+          title="Nội dung chuyển khoản"
+          value="TXUS1234567"
+          copy="TXUS1234567"
+        />
         <p className="bank-notice">
           Lưu ý: Vui lòng <span>không chỉnh sửa</span> nội dung chuyển khoản để
-          hệ thống có thể kiểm tra tự động và <span>giữ lại</span> kết quả giao
-          dịch.
+          hệ thống có thể kiểm tra tự động và <span>lưu lại</span> kết quả giao
+          dịch cho đến khi được xác nhận thanh toán.
         </p>
         <ButtonGroup>
           <Button typeFill="text" onClick={decrement}>
@@ -83,6 +87,7 @@ const StepBody = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   text-align: center;
+  margin-bottom: 2rem;
   .grid-left {
     display: flex;
     flex-direction: column;
@@ -147,7 +152,4 @@ const ButtonGroup = styled.div`
   flex-direction: row;
   gap: 1rem;
   width: 100%;
-  button {
-    width: 50%;
-  }
 `;

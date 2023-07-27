@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import Stepper from 'components/Stepper';
 import Navbar from 'components/NavBar/NavBar';
-import Button from 'components/Button/Button';
-import { useStepper } from 'hooks';
 import StepSeat from './components/StepSeat';
 import StepCustomer from './components/StepCustomer';
 import StepBilling from './components/StepBilling';

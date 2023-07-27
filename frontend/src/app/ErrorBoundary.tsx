@@ -1,14 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Main } from 'components/Layout';
-import { Link } from 'react-router-dom';
-import Path, { AppPath } from 'routes/paths';
-import { absolutePath, join } from 'utils/path.utils';
 import {
   ErrorBoundary as ErrorBoundaryWrapper,
   FallbackProps,
 } from 'react-error-boundary';
+import { Link } from 'react-router-dom';
+
+import { Main } from 'components/Layout';
+import Path from '../routes/paths';
+import { absolutePath, join } from '../utils/path.utils';
 
 /**
  * Error Boundary
@@ -34,7 +35,7 @@ const Fallback = ({ error }: FallbackProps) => {
       <Wrapper>
         <Title>{t?.('title')}</Title>
         <p>{error?.message}</p>
-        <Link to={absolutePath(join(Path.App, AppPath.Home))} reloadDocument>
+        <Link to={absolutePath(join(Path.App, Path.Home))} reloadDocument>
           {t?.('home-link-caption')}
         </Link>
       </Wrapper>

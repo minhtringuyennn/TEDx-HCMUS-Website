@@ -27,15 +27,6 @@ export const warning = '#FFA700';
 export const error = '#FA0B0B';
 export const info = '#1673DB';
 
-export const bigTitle = css`
-  font-family: 'Selima';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 100px;
-  text-transform: uppercase;
-  line-height: 116px;
-`
-
 export const scrollBarWidth = '6px';
 
 export const scrollbar = css`
@@ -57,8 +48,8 @@ export const scrollbar = css`
     background-color: rgba(166, 185, 200, 1);
   }
   &:hover::-webkit-scrollbar {
-    width: ${scrollBarWidth};
-    height: ${scrollBarWidth};
+    width: 0;
+    height: 0;
   }
   @media (max-width: 527px) {
     &:hover::-webkit-scrollbar {
@@ -69,8 +60,8 @@ export const scrollbar = css`
 `;
 
 const spinAnimationFrame = keyframes`
-  from { transform: rotate(0) translate(-50%, -50%) }
-  to { transform: rotate(360deg) translate(-50%, -50%) }
+from { transform: rotate(0) translate(-50%, -50%) }
+to { transform: rotate(360deg) translate(-50%, -50%) }
 `;
 
 export const spinAnimation = css`
@@ -84,7 +75,7 @@ export const size = {
   lg: '1280px',
   md: '960px',
   sm: '600px',
-}
+};
 
 export const device = {
   xl: `(max-width: ${size.xl})`,
@@ -92,6 +83,18 @@ export const device = {
   md: `(max-width: ${size.md})`,
   sm: `(max-width: ${size.sm})`,
 };
+
+export const bigTitle = css`
+  font-family: 'Selima';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 80px;
+  text-transform: uppercase;
+  line-height: normal;
+  @media screen and (max-width: ${size.sm}) {
+    font-size: 40px;
+  }
+`;
 
 export const TextContent = styled.p<{
   size?: number;

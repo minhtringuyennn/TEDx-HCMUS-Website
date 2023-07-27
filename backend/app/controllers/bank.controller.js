@@ -61,7 +61,7 @@ async function updateCredential() {
 
 async function fetchTransactions(access_token, query) {
   const apiUrl = "https://onlinebanking.techcombank.com.vn/api/transaction-manager/client-api/v2/transactions";
-  const { bookingDateGreaterThan, bookingDateLessThan, categories, from, size, orderBy, direction } = query;
+  const { bookingDateGreaterThan, bookingDateLessThan, categories, from, size, orderBy, direction, accountId } = query;
 
   const params = {
     bookingDateGreaterThan: bookingDateGreaterThan || dayjs().subtract(1, "month").format("YYYY-MM-DD"),
@@ -71,13 +71,30 @@ async function fetchTransactions(access_token, query) {
     size: size || "500",
     orderBy: orderBy || "bookingDate",
     direction: direction || "DESC",
+    accountId: accountId || "",
   };
 
   const headers = {
-    Cookie: `Authorization=${access_token}`,
+    Authorization: `Bearer ${access_token}`,
   };
 
   try {
+    // Try refresh arrangement
+    const refreshArrangementPromise = axios.post(
+      "https://onlinebanking.techcombank.com.vn/api/sync-dis/client-api/v1/transactions/refresh/arrangements",
+      { externalArrangementIds: [accountId] },
+      { headers }
+    );
+
+    refreshArrangementPromise
+      .then(() => {
+        console.log("Refresh arrangement success!");
+      })
+      .catch((error) => {
+        console.log("Refresh arrangement failed!");
+        console.error(error);
+      });
+
     const response = await axios.get(apiUrl, { params, headers });
     const transactions = response.data;
     const transactionsToSave = transactions.map((transaction) => {

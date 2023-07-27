@@ -28,18 +28,20 @@ const ClipboardCopy = ({ copyText }: ClipboardProps) => {
         }, 1500);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
   return (
-    <ClipboardCopyButton typeFill="secondary" onClick={handleCopyClick}>
-      <span>{isCopied ? 'Copied!' : 'Copy'}</span>
-    </ClipboardCopyButton>
+    <Styled>
+      <Button typeFill="secondary" onClick={handleCopyClick}>
+        {isCopied ? 'Done' : 'Copy'}
+      </Button>
+    </Styled>
   );
 };
 
-const ClipboardCopyButton = styled(Button)`
+const Styled = styled.div`
   width: 80px;
   height: 40px;
   font-weight: 400;

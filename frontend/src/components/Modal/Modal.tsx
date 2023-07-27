@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { Quit } from 'icons';
 import styled from 'styled-components';
 
-interface ModalProps {
+interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+  ...props
+}: ModalProps) => {
   const outsideRef = React.useRef(null);
 
   const handleCloseOnOverlay = (
@@ -27,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         onClick={handleCloseOnOverlay}
         role="presentation"
       />
-      <div className="modal-box">
+      <div className="modal-box" {...props}>
         <button type="button" className="quit-button" onClick={onClose}>
           <Quit style={{ width: '100%', height: '100%' }} />
         </button>
@@ -38,6 +43,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 };
 
 const CustomModal = styled.div`
+  z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;
@@ -102,11 +108,15 @@ const CustomModal = styled.div`
       width: 1rem;
       padding: 2px;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .modal-box {
       width: 100%;
       margin: 1rem;
       border-radius: 0.5rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .modal-content {
       padding: 1.25rem 0 0 0;
     }

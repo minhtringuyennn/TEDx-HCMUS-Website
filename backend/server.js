@@ -2,12 +2,19 @@ require("dotenv").config();
 
 const express = require("express");
 const cron = require("node-cron");
+const cors = require("cors");
+const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
+const { spawn } = require("child_process");
 
+const { DB_NAME } = require("./app/config/db.config.js");
 const db = require("./app/models");
-const { TRIGGER_REFRESH_TIME, TRIGGER_CRON_JOB } = require("./app/common/constants.js");
+const { TRIGGER_REFRESH_TIME, TRIGGER_CRON_JOB, DB_KEY, TRIGGER_BACKUP_DB } = require("./app/common/constants.js");
 const { setCredentialIntoDB, refreshCredential } = require("./app/common/helpers.js");
 
 const app = express();
+
+app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -15,6 +22,8 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+const System = db.system;
+const Seat = db.seat;
 const BankCredential = db.bank_credential;
 
 db.mongoose
@@ -38,6 +47,8 @@ app.get("/ping", (req, res) => {
 });
 
 require("./app/routes/bank.routes")(app);
+require("./app/routes/ticket.routes")(app);
+require("./app/routes/system.routes")(app);
 
 // list all available routes
 function print(path, layer) {
@@ -67,12 +78,91 @@ function split(thing) {
 
 app._router.stack.forEach(print.bind(null, []));
 
+const generateAPIKey = async () => {
+  // const key = uuidv4().replace(/-/g, "");
+  const key = "TEDXHCMUS_TICKET_SYSTEM_150723";
+  console.log("SESSION API KEY IS: ", key);
+
+  const salt = await bcrypt.genSalt(10);
+  const encryptedKey = await bcrypt.hash(key, salt);
+  return { encryptedKey };
+};
+
+generateAPIKey().then((data) => {
+  const { encryptedKey } = data;
+  System.findOneAndUpdate({}, { sessionApiKey: encryptedKey }, { new: true, useFindAndModify: false })
+    .then((data) => {
+      console.log("API_KEY updated");
+    })
+    .catch((err) => {
+      console.error("Error when updating api_key: ", err);
+    });
+});
+
 // Refresh token every 30 seconds
 cron.schedule(TRIGGER_CRON_JOB, async () => {
   try {
     console.log("Running cron job to refresh token...");
 
     const current_time = Date.now();
+
+    const system = await System.findOne();
+
+    System.findOne({
+      _id: DB_KEY.SYSTEM,
+    })
+      .then((data) => {
+        if (data.lastDBBackup < Date.now() - TRIGGER_BACKUP_DB) {
+          console.log("Backup database");
+
+          // Backup database
+          const BACKUP_PATH = `./db/backup/${Date.now()}`;
+
+          const backupProcess = spawn(
+            "mongodump",
+            [`--uri=${db.url}`, `--db=${DB_NAME}`, `--archive=${BACKUP_PATH}`, "--gzip"],
+            {
+              shell: true,
+            }
+          );
+
+          console.log("Backup process started...", backupProcess.pid, backupProcess.spawnargs);
+
+          backupProcess.stderr.on("data", (data) => {
+            console.log(`Backup process: ${data}`);
+          });
+
+          backupProcess.on("exit", (code, signal) => {
+            if (code) console.log("Backup process exited with code ", code);
+            else if (signal) console.error("Backup process was killed with singal ", signal);
+            else {
+              console.log(`Successfully backedup the database at ${BACKUP_PATH}`);
+              System.findOneAndUpdate(
+                { _id: DB_KEY.SYSTEM },
+                {
+                  lastDBBackup: Date.now(),
+                },
+                { new: true, useFindAndModify: false }
+              )
+                .then(() => {
+                  console.log("System updated");
+                })
+                .catch((err) => {
+                  console.error("Error when updating system: ", err);
+                });
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error when getting lastDBBackup: ", err);
+      });
+
+    const { bankVerifyStatus } = system;
+    if (!bankVerifyStatus) {
+      console.error("Bank Verify Status is down! Skip refreshing token...");
+      return;
+    }
 
     const latestRecord = await BankCredential.findOne().sort({ _id: -1 });
     const { refresh_token, expire_time } = latestRecord;
@@ -87,7 +177,7 @@ cron.schedule(TRIGGER_CRON_JOB, async () => {
           console.log("Updated credential: ", data);
         })
         .catch((err) => {
-          console.log("Error when updating credential: ", err);
+          console.error("Error when updating credential: ", err);
         });
     }
   } catch (error) {
@@ -96,7 +186,7 @@ cron.schedule(TRIGGER_CRON_JOB, async () => {
 });
 
 // Set port, listen for requests
-const PORT = process.env.NODE_DOCKER_PORT || 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

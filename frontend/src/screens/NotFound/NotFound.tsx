@@ -21,7 +21,8 @@ export default NotFound;
 const Container = styled.section`
   ${({ theme }) => theme.utils.centerFlex};
   flex-direction: column;
-  height: 100%;
+  gap: 5rem;
+  height: 100vh;
   h2 {
     font-size: 4rem;
     margin: 10px;

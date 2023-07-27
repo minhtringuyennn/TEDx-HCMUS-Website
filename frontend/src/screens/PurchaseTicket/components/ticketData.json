@@ -1,10 +1,17 @@
-[
-  {
-    "title": "Vé Early bird",
-    "types": [
-      { "title": "Ghế đơn (x1 ghế)", "price": 269000 },
-      { "title": "Ghế đôi (x2 ghế)", "price": 500000 },
-      { "title": "Ghế nhóm (x4 ghế)", "price": 900000 }
-    ]
+{
+  "premium": {
+    "single": 300000,
+    "duo": 560000,
+    "quad": 1100000
+  },
+  "standard": {
+    "single": 290000,
+    "duo": 520000,
+    "quad": 1000000
+  },
+  "eco": {
+    "single": 260000,
+    "duo": 490000,
+    "quad": 900000
   }
-]
+}

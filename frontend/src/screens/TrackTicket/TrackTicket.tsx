@@ -1,34 +1,84 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-import Navbar from 'components/NavBar/NavBar';
 import InputField from 'components/InputField';
-import Button from 'components/Button/Button';
 import { Form, Space } from 'antd';
+import { useQuery, QueryStatus } from '@tanstack/react-query';
 
-const onFinish = (values: any) => {
-  console.log(values);
-};
-const TrackTicket = () => (
-  <Styled>
-    <section>
-      <div className="track-title">
-        <h2>Theo dõi đơn hàng</h2>
-        <div className="track-id">
-          <Form className="form-width" onFinish={onFinish}>
-            <Form.Item className="form-width" name="booking-id">
-              <Space.Compact className="form-width">
-                <InputField placeholder="Nhập mã đơn hàng" />
-                <Button type="submit" style={{ minWidth: 'fit-content' }}>
-                  Theo dõi
-                </Button>
-              </Space.Compact>
-            </Form.Item>
-          </Form>
+import Navbar from '../../components/NavBar/NavBar';
+
+import TicketAPI from '../../api/clients/ticket/methods';
+import type { GetTicket } from '../../api/clients/ticket/params';
+import type { Ticket } from '../../api/clients/ticket/response';
+import type { APIErrorConfig } from '../../api/types';
+
+function useQueryTicket(transactionId: GetTicket): {
+  data: Ticket;
+  status: QueryStatus;
+} {
+  const { data, status } = useQuery<Ticket, APIErrorConfig>(
+    ['ticket', transactionId],
+    () => TicketAPI.getTicket(transactionId),
+    {
+      enabled: !!transactionId,
+      retry: 1,
+    },
+  );
+
+  return { data: data as Ticket, status };
+}
+
+const TrackTicket = () => {
+  const [transactionId, setTransactionId] = useState<GetTicket>({
+    transactionId: '',
+  });
+  const { data, status } = useQueryTicket(transactionId);
+
+  return (
+    <Styled>
+      <section>
+        <div className="track-title">
+          <h2>Theo dõi đơn hàng</h2>
+          <div className="track-id">
+            <Form
+              className="form-width"
+              onFinish={(values) => {
+                setTransactionId({ transactionId: values['booking-id'] });
+              }}
+            >
+              <Form.Item className="form-width" name="booking-id">
+                <Space.Compact className="form-width">
+                  <InputField placeholder="Nhập mã đơn hàng" />
+                </Space.Compact>
+              </Form.Item>
+            </Form>
+          </div>
+
+          {status === 'loading' && <div>Chờ tí nha...</div>}
+          {status === 'error' && <div>Đơn hàng không tồn tại</div>}
+          {status === 'success' && (
+            <div>
+              <h2>Thông tin đơn hàng</h2>
+              <div>
+                <p>Mã đơn hàng: {data.transactionId}</p>
+                <p>Trạng thái: {data.status}</p>
+                <p>QR Code:</p>
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${data.transactionId}`}
+                  alt="QR Code"
+                  style={{
+                    width: '500px',
+                    height: '500px',
+                  }}
+                />
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-    </section>
-    <Navbar />
-  </Styled>
-);
+      </section>
+      <Navbar />
+    </Styled>
+  );
+};
 
 export default TrackTicket;
 

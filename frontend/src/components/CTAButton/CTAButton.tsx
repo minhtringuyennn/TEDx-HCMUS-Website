@@ -11,20 +11,20 @@ const CTAButton = () => {
   const toggleModal = () => setModalState(!isModalOpen);
   return (
     <Styled>
-      <Button type="primary" onClick={toggleModal}>
+      <Button typeFill="primary" onClick={toggleModal}>
         Đặt vé ngay
       </Button>
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
         <div className="content">
           <h3>Đặt vé TEDx Talk 2023: inSanity</h3>
           <div className="cards-container">
-            <Link to={`/${Path.Track}`} replace className="card">
+            <div className="card-disabled">
               <Search className="option-icon" />
               <div className="option">
                 <div className="option-title">Đã có vé</div>
                 <div className="option-description">Tra cứu đơn hàng</div>
               </div>
-            </Link>
+            </div>
             <Link to={`/${Path.Purchase}`} replace className="card">
               <Ticket className="option-icon" />
               <div className="option">
@@ -75,6 +75,30 @@ const Styled = styled.div`
       color: ${({ theme }) => theme.colors.primary.default};
     }
   }
+  .card-disabled {
+    text-decoration: none;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0px;
+    border-radius: 8px;
+    border: 2px solid ${({ theme }) => theme.colors.gray};
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    color: ${({ theme }) => theme.colors.lightGray};
+    transition: 200ms ease-in-out;
+    opacity: 0.5;
+    cursor: not-allowed;
+    @media (max-width: ${({ theme }) => theme.size.sm}) {
+      flex-direction: row;
+      padding: 1rem;
+      gap: 1rem;
+      justify-content: start;
+    }
+  }
   .option-icon {
     color: inherit;
   }
@@ -95,20 +119,28 @@ const Styled = styled.div`
     .content {
       gap: 1rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .cards-container {
       flex-direction: column;
       gap: 1rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .card {
       flex-direction: row;
       padding: 1rem;
       gap: 1rem;
       justify-content: start;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .option-icon {
       width: 3rem;
       height: 3rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.size.sm}) {
     .option {
       align-items: flex-start;
     }
