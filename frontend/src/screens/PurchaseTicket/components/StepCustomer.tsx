@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useStepper } from 'hooks';
 import Button from 'components/Button';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import TicketData from './ticketData.json';
 const FormSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
-  phone: z.string().min(10),
+  phone: z.string().min(9).max(12),
   coupon: z.string().optional(),
 });
 
@@ -22,12 +22,23 @@ const StepInfo = () => {
   });
   const form = Form.useFormInstance();
 
-  const { name, email, phone } = formValues;
+  const { name, email, phone, coupon } = formValues;
 
   const isValid = useMemo(() => {
-    if (name && email && phone) {
-      const phone = formValues.phone.replace(/\D/g, '');
-      const formatFormValues = { ...formValues, phone };
+    const currentCustomer = {
+      name: name || customer.name,
+      email: email || customer.email,
+      phone: phone || customer.phone,
+      coupon: coupon || customer.coupon,
+    };
+
+    if (
+      currentCustomer.name &&
+      currentCustomer.email &&
+      currentCustomer.phone
+    ) {
+      const phone = currentCustomer.phone.replace(/\D/g, '');
+      const formatFormValues = { ...currentCustomer, phone };
 
       const parseValid = FormSchema.safeParse(formatFormValues);
       if (parseValid.success) {
@@ -36,7 +47,7 @@ const StepInfo = () => {
       }
     }
     return false;
-  }, [name, email, phone, formValues]);
+  }, [name, email, phone, formValues, setCustomer]);
 
   return (
     <StepBody>
@@ -147,9 +158,9 @@ interface BookingGroup {
 }
 
 const convertTitle = (seat: string) => {
-  if (seat === 'single') return 'đơn';
+  if (seat === 'quad') return 'nhóm';
   if (seat === 'duo') return 'đôi';
-  return 'nhóm';
+  return 'đơn';
 };
 
 const BookingInfo = () => {
@@ -163,19 +174,16 @@ const BookingInfo = () => {
 
   const seatItem: BookingItem[] = [];
   seatsGroup.forEach((seat) => {
-    console.log(
-      Object.entries(seat.seat).forEach((item) => {
-        if (item[1] > 0)
-          seatItem.push({
-            title: `Ghế ${convertTitle(item[0])} ${seat.title}`,
-            single: TicketData[seat.title as seatKey][item[0] as seatKey2],
-            number: item[1],
-          });
-      }),
-    );
+    Object.entries(seat.seat).forEach((item) => {
+      if (item[1] > 0)
+        seatItem.push({
+          title: `Ghế ${convertTitle(item[0])} ${seat.title}`,
+          single: TicketData[seat.title as seatKey][item[0] as seatKey2],
+          number: item[1],
+        });
+    });
   });
 
-  const total = 0;
   return (
     <InfoSection>
       <h3>Đơn hàng của bạn</h3>
@@ -265,10 +273,12 @@ const InfoSection = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    text-transform: capitalize;
   }
   .booking-item-price {
     font-size: 12px;
     color: ${({ theme }) => theme.colors.lightGray};
+    text-transform: none;
   }
 
   .ticket-group-divider {

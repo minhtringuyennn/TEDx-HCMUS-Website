@@ -14,7 +14,7 @@ function numberWithCommas(x: number) {
 interface BankInfo {
   title: string;
   value: string | number;
-  copy: string | null;
+  copy?: string | null;
 }
 const BankContainer = ({ title, value, copy }: BankInfo) => (
   <div className="bank-container">
@@ -27,7 +27,7 @@ const BankContainer = ({ title, value, copy }: BankInfo) => (
 );
 
 const StepBilling = () => {
-  const { increment, decrement, seats } = useStepper();
+  const { increment, decrement, seats, customer } = useStepper();
   async function downloadImage(imageSrc: string) {
     const image = await fetch(imageSrc);
     const imageBlog = await image.blob();
@@ -40,9 +40,15 @@ const StepBilling = () => {
     link.click();
     document.body.removeChild(link);
   }
+
   return (
     <StepBody>
       <div className="grid-left">
+        <h3>Thông tin khách hàng</h3>
+        <BankContainer title="Họ và Tên" value={customer.name} />
+        <BankContainer title="Email liên lạc" value={customer.email} />
+        <BankContainer title="Số điện thoại liên lạc" value={customer.phone} />
+
         <h3>Thông tin chuyển khoản</h3>
         {Object.entries(BankData).map(([key, value]) => (
           <BankContainer
@@ -61,11 +67,14 @@ const StepBilling = () => {
           value="TXUS1234567"
           copy="TXUS1234567"
         />
+
         <p className="bank-notice">
-          Lưu ý: Vui lòng <span>không chỉnh sửa</span> nội dung chuyển khoản để
-          hệ thống có thể kiểm tra tự động và <span>lưu lại</span> kết quả giao
-          dịch cho đến khi được xác nhận thanh toán.
+          Vui lòng <span>đảm bảo chính xác</span> thông tin khách hàng,
+          <span> không chỉnh sửa</span> nội dung chuyển khoản và
+          <span> giữ lại kết quả giao dịch</span> cho đến khi được xác nhận
+          thanh toán
         </p>
+
         <ButtonGroup>
           <Button typeFill="text" onClick={decrement}>
             Trở về

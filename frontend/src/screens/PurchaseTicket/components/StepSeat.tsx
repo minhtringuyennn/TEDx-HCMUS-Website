@@ -106,7 +106,7 @@ const StepTicket = () => {
         <h3>Giá vé</h3>
         {Object.entries(TicketData).map(([key, value]) => (
           <div className="ticket-opt">
-            <div className="ticket-type-title">{`Ghế hạng ${key}`}</div>
+            <div className="ticket-type-title">{`Ghế hạng ${key.toLocaleUpperCase()}`}</div>
             <QuantityGroup seatKey={key as SeatKeyType} />
           </div>
         ))}
@@ -132,7 +132,7 @@ const StepTicket = () => {
         <Modal isOpen={isModalOpen} onClose={toggleModal}>
           {Object.keys(TicketData).map((key) => (
             <TicketGroup>
-              <div>{`Vé hạng ${key}`}</div>
+              <div>{`Ghế hạng ${key.toLocaleUpperCase()}`}</div>
               {Object.entries(TicketData[key as SeatKeyType]).map(
                 ([key, value]) => (
                   <div className="ticket-type">
