@@ -1,6 +1,8 @@
 const db = require("../models");
 const axios = require("axios");
 
+const { DEFAULT_EXPIRE_TIME } = require("./constants.js");
+
 const BankCredential = db.bank_credential;
 
 exports.setCredentialIntoDB = function (credential) {

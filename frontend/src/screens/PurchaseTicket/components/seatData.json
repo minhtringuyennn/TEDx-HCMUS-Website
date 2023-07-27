@@ -1,0 +1,44 @@
+{
+  "premium": {
+    "reserved": [
+      [0, 4],
+      [1, 5],
+      [1, 6]
+    ],
+    "row": 6,
+    "total": 30,
+    "price": {
+      "singleSeat": 300000,
+      "duoSeat": 560000,
+      "quadSeat": 1100000
+    }
+  },
+  "standard": {
+    "reserved": [
+      [0, 4],
+      [1, 5],
+      [1, 6]
+    ],
+    "row": 6,
+    "total": 30,
+    "price": {
+      "singleSeat": 290000,
+      "duoSeat": 520000,
+      "quadSeat": 1000000
+    }
+  },
+  "eco": {
+    "reserved": [
+      [0, 4],
+      [1, 5],
+      [1, 6]
+    ],
+    "row": 3,
+    "total": 30,
+    "price": {
+      "singleSeat": 260000,
+      "duoSeat": 490000,
+      "quadSeat": 900000
+    }
+  }
+}
